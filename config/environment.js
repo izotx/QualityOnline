@@ -5,6 +5,14 @@ module.exports = function(environment) {
     modulePrefix: 'quality-online',
     environment: environment,
     rootURL: '/',
+    firebase:  {
+        apiKey: "AIzaSyB8TQjczxRYH3kqVTWenqYT1onUhMIpfl4",
+        authDomain: "qualityonline-fb396.firebaseapp.com",
+        databaseURL: "https://qualityonline-fb396.firebaseio.com",
+        storageBucket: "qualityonline-fb396.appspot.com",
+        messagingSenderId: "631911141512"
+      },
+
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
