@@ -9,8 +9,9 @@ const Router = Ember.Router.extend({
 Router.map(function() {
   this.route('colleges');
   this.route('departments');
-   this.route('faculty',{path:'/faculty'});
+  this.route('faculty',{path:'/faculty'});
   //this.route('faculty');
+  this.route('login');
 });
 
 export default Router;

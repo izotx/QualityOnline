@@ -4,6 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'quality-online',
     environment: environment,
+    contentSecurityPolicy: { 'connect-src': "'self' https://auth.firebase.com wss://*.firebaseio.com" },
     rootURL: '/',
     firebase:  {
         apiKey: "AIzaSyB8TQjczxRYH3kqVTWenqYT1onUhMIpfl4",
@@ -12,8 +13,10 @@ module.exports = function(environment) {
         storageBucket: "qualityonline-fb396.appspot.com",
         messagingSenderId: "631911141512"
       },
-
-    locationType: 'auto',
+      torii: {
+          sessionServiceName: 'session'
+        },
+    locationType: 'hash',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

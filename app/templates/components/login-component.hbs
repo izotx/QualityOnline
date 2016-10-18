@@ -1,0 +1,10 @@
+{{yield}}
+<h3>Login </h3>
+{{input placeholder="email" value = email}}
+{{input type= 'password' placeholder="password" value = password}}
+<button {{action 'login' 'password'}}>Login</button>
+
+  {{#if session.isAuthenticated}}
+      Yes! I am logged in! 
+
+  {{/if}}
