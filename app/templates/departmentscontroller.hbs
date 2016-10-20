@@ -1,10 +1,27 @@
 {{outlet}}
-<h1> TEST </h1>
+{{#if model.college}}
+<h3>{{model.college.name}}</h3>
+{{else}}
+<h3>All Departments </h3>
+{{/if}}
 
-{{log filteredDepartments }}
+{{input placeholder="Department" value = departmentName}}
+ <!-- onchange={{action "updateValue" value="target.value"}} onchange={{action "updateValue" value="target.value"}}  -->
+<select id="collegeSelect">
+  {{#each model.colleges as |college| }}
+    <option  value={{college.id}}>{{college.name}}</option>
+  {{/each}}
+</select>
+
+<button {{action 'addDepartment' departmentName}}>Add</button>
+
+
+
 <table>
   <tr><th>Department</th><th>College</th><th>Details</th><th>Edit</th> </tr>
-{{#each model.departments as |department|}}
+
+
+{{#each model.college.departments as |department|}}
   <tr><td>{{input id=department.id placeholder="Department" value = department.name }}</td>
     <td><select id="select{{department.id}}" >
     {{#each model.colleges as |college| }}

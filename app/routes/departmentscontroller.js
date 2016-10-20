@@ -21,30 +21,20 @@ export default Ember.Route.extend({
     // })
 
 //    console.log(this.params);
+    console.log(params.college);
     console.log(this.queryParams.college);
-    var collegeId = this.get('college');
 
+    var collegeId = params.college;
     var store = this.store
-    var departments;
-    if (collegeId){
-        departments =  this.store.findRecord('college',collegeId).then(function(college){
-            return college.departments
-        })
-    }
-    else{
-      departments = this.store.findAll('department')
 
-    }
+    var college =  this.store.findRecord('college',collegeId);
+    var departments = this.store.findAll('department')
 
-
-    // var depts = this.store.query('department',{
-    //   filter:{college:}
-    // })
 
     var multiModel = Ember.Object.create(
       {
-
-        departments : this.store.findAll('department'),
+        college: college,
+        departments : departments,
         colleges :this.store.findAll('college')
       });
 
