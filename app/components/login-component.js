@@ -3,10 +3,18 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   session: Ember.inject.service('session'),
   firebase: Ember.inject.service(),
+  message:"3223",
   actions:{
+      logout(){
+        let session = this.get('session')
+        session.close();
+        console.log(session);
+      },
+
       login(provider){
         let email = this.get('email');
         let password =  this.get('password');
+      ///  let message =  this.get('message');
 
       //  console.log(session);
       //  console.log(firebase);
@@ -31,6 +39,8 @@ export default Ember.Component.extend({
         //
         // }
 
+        console.log(this.get('session'));
+
 
         this.get('session').open('firebase', {
                 provider: provider,
@@ -46,9 +56,12 @@ export default Ember.Component.extend({
                   //
                   // }
 
+                  this.set('message',"Logged In");// erro
                   console.log("Logged IN woot woot woot woot woot");
               }, (error) => {
                 console.log(error);
+                  this.set('message', error);// error
+
               });
 
 

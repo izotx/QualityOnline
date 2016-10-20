@@ -1,10 +1,19 @@
 <h2>Quality Online by College</h2>
 {{outlet}}
+  {{#if session.isAuthenticated}}
+  {{input placeholder="College" value = collegeName}}
+  <button {{action 'addCollege' collegeName}}>Add</button>
+  {{/if}}
+
 <ul>
-  {{#each model as |scientist|}}
-    <li>{{scientist}}</li>
+  {{#each model as |college|}}
+    <!-- <li>{{college.name}}{{#link-to "departments"  query-params college=college.id }}Details{{/link-to}}</li> -->
+  <!-- (query-params college = college.id) -->
+    <li>{{college.name}}{{#link-to "departmentscontroller" college.name (query-params college=college.id) }}Details{{/link-to}}</li>
   {{/each}}
 </ul>
+
 {{log model}}
+
 <!--
 {{people-list title="List of Scientists" people=model}} -->

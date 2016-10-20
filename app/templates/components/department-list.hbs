@@ -1,0 +1,59 @@
+{{yield}}
+{{#if session.isAuthenticated}}
+{{/if}}
+
+{{#if editMode}}
+<button {{action 'editMode'}}>Finish Editing</button>
+{{else}}
+<button {{action 'editMode'}}>Edit</button>
+{{/if}}
+<br/>
+
+{{#if editMode}}
+{{input placeholder="Department" value = departmentName}}
+ <!-- onchange={{action "updateValue" value="target.value"}} onchange={{action "updateValue" value="target.value"}}  -->
+<select id="collegeSelect">
+  {{#each model.colleges as |college| }}
+    <option  value={{college.id}}>{{college.name}}</option>
+  {{/each}}
+</select>
+
+<button {{action 'addDepartment' departmentName}}>Add</button>
+{{/if}}
+
+{{#if editMode}}
+<table>
+  <tr><th>Department</th><th>College</th><th>Details</th><th>Edit</th> </tr>
+{{#each model.departments as |department|}}
+  <tr><td>{{input id=department.id placeholder="Department" value = department.name }}</td>
+    <td><select id="select{{department.id}}" >
+    {{#each model.colleges as |college| }}
+      {{#if (eq department.college.id  college.id)}}
+          <option value={{college.id}} selected="true">{{college.name}}</option>
+        {{else}}
+        <option value={{college.id}}>{{college.name}}</option>
+      {{/if}}
+    {{/each}}
+  </select></td>
+  <td>{{#link-to "department"}}Details{{/link-to}}</td>
+<!-- department.id -->
+
+  <td><button {{action 'departmentChanged' department.id}}>Save</button> </td>
+  <td><button {{action "deleteDepartment" department.id}}>Delete</button> </td>
+</tr>
+{{/each}}
+
+</table>
+{{else}}
+
+<table>
+<tr><th>Department</th><th>College</th><th>Details</th> </tr>
+{{#each model.departments as |department|}}
+  <tr><td>{{department.name }}</td>
+    <td>{{department.college.name}}</td>
+
+  <td>{{#link-to "department"}}Details{{/link-to}}</td>
+</tr>
+{{/each}}
+</table>
+{{/if}}

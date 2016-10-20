@@ -2,4 +2,10 @@
 
 {{outlet}}
 
-<!-- {{#link-to "colleges"}}Colleges{{/link-to}} -->
+{{#link-to "colleges"}}Colleges{{/link-to}}
+{{#link-to "departments"}}Departments{{/link-to}}
+{{#if session.isAuthenticated}}
+
+{{else}}
+  {{#link-to "login"}}Login{{/link-to}}
+{{/if}}
