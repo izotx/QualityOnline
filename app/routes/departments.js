@@ -16,6 +16,18 @@ export default Ember.Route.extend({
   // },
 
 
+  actions:{
+    editMode(){
+      if( this.get('editMode')){
+          this.set('editMode',false)
+      }else{
+          this.set('editMode',true)
+      }
+    }
+  },
+
+editMode:false,
+
 beforeModel: function(transition,queryParams){
 console.log("Before Model");
   console.log(this.params);

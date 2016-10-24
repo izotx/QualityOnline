@@ -1,1 +1,39 @@
 {{yield}}
+
+{{input placeholder="Salutation" value = salutation}}
+{{input placeholder="First Name" value = firstname}}
+{{input placeholder="Last Name" value = lastname}}
+{{input placeholder="Email" value = email}}
+ <!-- onchange={{action "updateValue" value="target.value"}} onchange={{action "updateValue" value="target.value"}}  -->
+<select id="departmentSelect">
+  {{#each departments as |department| }}
+    <option  value={{department.id}}>{{department.name}}</option>
+  {{/each}}
+</select>
+
+<button {{action "addFaculty" salutation firstname lastname email}}>Add Faculty</button>
+
+
+
+{{#light-table table height='65vh' as |t|}}
+
+  {{t.head
+    onColumnClick=(action 'onColumnClick')
+    iconAscending='fa fa-sort-asc'
+    iconDescending='fa fa-sort-desc'
+    fixed=true
+  }}
+
+  {{#t.body
+    canSelect=false
+    onScrolledToBottom=(action 'onScrolledToBottom')
+    as |body|
+  }}
+    {{#if isLoading}}
+      {{#body.loader}}
+        {{table-loader}}
+      {{/body.loader}}
+    {{/if}}
+  {{/t.body}}
+
+{{/light-table}}
