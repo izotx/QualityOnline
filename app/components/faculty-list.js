@@ -4,83 +4,94 @@ import Table from 'ember-light-table';
 const { isEmpty, computed } = Ember;
 
   export default Ember.Component.extend({
-    page: 1,
-    limit: 20,
-    dir: 'asc',
-    sort: null,
-    model: null,
-    isLoading: false,
-    canLoadMore: true,
+    // page: 1,
+    // limit: 20,
+    // dir: 'asc',
+    // sort: null,
+    // model: null,
+    // isLoading: false,
+    // canLoadMore: true,
+    //
+    //
+    // columns: computed(function() {
+    //   return [
+    //     {
+    //       label: 'Avatar',
+    //       valuePath: 'avatar',
+    //       cellComponent: 'user-avatar',
+    //       width: '60px',
+    //       sortable: false
+    //     },
+    //     {
+    //     label: 'First Name',
+    //     valuePath: 'firstname',
+    //     width: '150px'
+    //   }, {
+    //     label: 'Last Name',
+    //     valuePath: 'lastname',
+    //     width: '150px'
+    //   }, {
+    //     label: 'Email',
+    //     valuePath: 'email'
+    //   },
+    //   {
+    //     label: 'Department',
+    //     valuePath: 'department.name'
+    //   },
+    //    {
+    //     label: 'Details',
+    //     valuePath: 'id',
+    //     cellComponent: 'details-button',
+    //       width: '60px'
+    //
+    //   }, {
+    //     label: 'Remove',
+    //     valuePath: 'id',
+    //     cellComponent: 'delete-button',
+    //     width: '60px'
+    //   }];
+    // }),
+    //
+    //
+    // table: computed('model', function() {
+    //   return new Table(this.get('columns'), this.get('model'), { enableSync: true });
+    // }),
 
-    // {
-    //   label: 'Avatar',
-    //   valuePath: 'avatar',
-    //   width: '60px',
-    //   sortable: false,
-    //   cellComponent: 'user-avatar'
+
+    //
+    // fetchRecords() {
+    //   this.set('isLoading', true);
+    //   this.store.query('faculty', this.getProperties(['firstName', 'lastName', 'email','department'])).then(records => {
+    //     var records = records.toArray()
+    //     //console.log(records)
+    //     //     obj["details"] = "<a href='Test'></a>"
+    //     // })
+    //     // this.get('model').clear();
+    //     var model = this.get('model');
+    //
+    //     records.forEach(function(record){
+    //         record["details"] = "<button> </button>"
+    //     });
+    //
+    //
+    //     this.set('model', records)
+    //
+    //     // this.get('model').pushObjects(records);
+    //     this.set('isLoading', false);
+    //     this.set('canLoadMore', !isEmpty(records));
+    //   });
     // },
-
-    columns: computed(function() {
-      return [ {
-        label: 'First Name',
-        valuePath: 'firstname',
-        width: '150px'
-      }, {
-        label: 'Last Name',
-        valuePath: 'lastname',
-        width: '150px'
-      }, {
-        label: 'Email',
-        valuePath: 'email'
-      },
-      {
-        label: 'Department',
-        valuePath: 'department.name'
-      },
-       {
-        label: 'Details',
-        valuePath: 'details'
-      }, {
-        label: 'Remove',
-        valuePath: 'country'
-      }];
-    }),
-
-
-    table: computed('model', function() {
-      return new Table(this.get('columns'), this.get('model'), { enableSync: true });
-    }),
-
-
-
-    fetchRecords() {
-      this.set('isLoading', true);
-      this.store.query('faculty', this.getProperties(['firstName', 'lastName', 'email','department'])).then(records => {
-        var records = records.toArray()
-        //console.log(records)
-        //     obj["details"] = "<a href='Test'></a>"
-        // })
-        // this.get('model').clear();
-        var model = this.get('model');
-
-        // records.forEach(function(record){
-        //     model.addObject(record._internalModel)
-        // });
-
-
-        this.set('model', records)
-
-        // this.get('model').pushObjects(records);
-        this.set('isLoading', false);
-        this.set('canLoadMore', !isEmpty(records));
-      });
-    },
-
+    //
+    
     departments:computed(function(){
       return this.store.findAll('department');
     }),
 
     actions: {
+      showDetails(id){
+        console.log("show details");
+      },
+
       someAction: function(){
        this.sendAction("someAction"); // Exposes the action
      },
@@ -109,25 +120,36 @@ const { isEmpty, computed } = Ember;
           faculty.save();
         // });
 
-      },
-
-      onScrolledToBottom() {
-        if(this.get('canLoadMore')) {
-          this.incrementProperty('page');
-          this.fetchRecords();
-        }
-      },
-
-      onColumnClick(column) {
-        if (column.sorted) {
-          this.setProperties({
-            dir: column.ascending ? 'asc' : 'desc',
-            sort: column.get('valuePath'),
-            page: 1
-          });
-          this.get('model').clear();
-          this.fetchRecords();
-        }
+      // },
+      // selectAll() {
+      //   this.get('table').rows.setEach('selected', true);
+      // },
+      //
+      // deselectAll() {
+      //   this.get('table.selectedRows').setEach('selected', false);
+      // },
+      //
+      // deleteAll() {
+      //   this.get('table').removeRows(this.get('table.selectedRows'));
+      // },
+      //
+      // onScrolledToBottom() {
+      //   if(this.get('canLoadMore')) {
+      //     this.incrementProperty('page');
+      //     this.fetchRecords();
+      //   }
+      // },
+      //
+      // onColumnClick(column) {
+      //   if (column.sorted) {
+      //     this.setProperties({
+      //       dir: column.ascending ? 'asc' : 'desc',
+      //       sort: column.get('valuePath'),
+      //       page: 1
+      //     });
+      //     this.get('model').clear();
+      //     this.fetchRecords();
+      //   }
       }
     }
   });

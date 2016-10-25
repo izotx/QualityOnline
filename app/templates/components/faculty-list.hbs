@@ -13,9 +13,30 @@
 
 <button {{action "addFaculty" salutation firstname lastname email}}>Add Faculty</button>
 
+<table class="table table-striped">
+<tr>
+  <th>Avatar</th>
+  <th>Salutation</th>
+  <th>First Name</th>
+  <th>Last Name</th>
+  <th>Email</th>
+  <th>Department</th>
+  <th>Details</th>
+</tr>
+{{#each model as |faculty| }}
+  <tr><td></td>
+      <td>{{faculty.salutation}}</td>
+      <td>{{faculty.firstname}}</td>
+      <td>{{faculty.lastname}}</td>
+      <td>{{faculty.email}}</td>
+      <td>{{faculty.department.name}}</td>
+      <td><button type="button" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button></td>
+    </tr>
+{{/each}}
+</table>
 
 
-{{#light-table table height='65vh' as |t|}}
+<!-- {{#light-table table height='65vh' as |t|}}
 
   {{t.head
     onColumnClick=(action 'onColumnClick')
@@ -25,7 +46,8 @@
   }}
 
   {{#t.body
-    canSelect=false
+    canSelect=true
+    multiSelect=true
     onScrolledToBottom=(action 'onScrolledToBottom')
     as |body|
   }}
@@ -36,4 +58,4 @@
     {{/if}}
   {{/t.body}}
 
-{{/light-table}}
+{{/light-table}} -->

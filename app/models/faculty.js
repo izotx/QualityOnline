@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  fistname: DS.attr('string'),
+  firstname: DS.attr('string'),
   lastname: DS.attr('string'),
   email: DS.attr('string'),
   department: DS.belongsTo('department'),
