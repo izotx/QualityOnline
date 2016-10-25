@@ -11,7 +11,7 @@
   {{/each}}
 </select>
 
-<button {{action "addFaculty" salutation firstname lastname email}}>Add Faculty</button>
+<button type="button" class="btn btn-xs btn-info"  {{action "addFaculty" salutation firstname lastname email}}>Add Faculty</button>
 
 <table class="table table-striped">
 <tr>
@@ -30,7 +30,8 @@
       <td>{{faculty.lastname}}</td>
       <td>{{faculty.email}}</td>
       <td>{{faculty.department.name}}</td>
-      <td><button type="button" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button></td>
+      <td>{{#link-to 'faculty.faculty' faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td>
+      <td><button type="button" class="btn btn-xs btn-danger"  {{action "deleteFaculty" faculty}}><span class="glyphicon glyphicon-remove"></span></button></td>
     </tr>
 {{/each}}
 </table>

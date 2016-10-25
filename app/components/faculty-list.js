@@ -82,22 +82,27 @@ const { isEmpty, computed } = Ember;
     //   });
     // },
     //
-    
+
     departments:computed(function(){
       return this.store.findAll('department');
     }),
 
     actions: {
-      showDetails(id){
-        console.log("show details");
-      },
 
       someAction: function(){
        this.sendAction("someAction"); // Exposes the action
      },
-      add(){
+      deleteFaculty(faculty){
         //get
+         console.log(faculty);
+         faculty.deleteRecord()
+         faculty.save()
       },
+     showDetailsFaculty(faculty){
+        // this.sendAction('showDetails',faculty)
+         this.sendAction('action',faculty);         //get
+         console.log("Inside Component");
+       },
       addFaculty(salutation,first,last,email){
 
         if ( !salutation){

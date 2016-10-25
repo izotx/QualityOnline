@@ -12,7 +12,7 @@ Router.map(function() {
   this.route('departments');
   // this.route('departments',{path:'/departments/:college'});
   this.route('faculty',{path:'/faculty'},function(){
-    this.route('faculty');
+    this.route('faculty',{ path: '/:faculty_id' });
   });
   this.route('login');
 

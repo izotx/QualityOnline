@@ -1,2 +1,44 @@
 {{yield}}
-<h3>{{facultyModel.name}} {{facultyModel.lastname}}</h3>
+
+<h4>{{facultyModel.firstname}}
+  {{facultyModel.lastname}}
+  {{facultyModel.email}}
+  {{facultyModel.department.name}}
+</h4>
+
+
+<h4>Training</h4>
+<!-- //add training -->
+{{input placeholder="Training" value = trainingDate type="date"}}
+<select id="trainingSelect">
+{{#each trainingTypes as |training| }}
+  <option value = {{training.name}}> {{training.name}} </option>
+{{/each}}
+</select>
+<button type="button" class="btn btn-xs btn-primary"  {{action "addTraining" trainingDate}}><span class="glyphicon glyphicon-plus"></span>Add Training</button>
+
+<table>
+
+  <tr><th>Type</th><th>Date</th></tr>
+  {{#each facultyModel.training as |training|}}
+  <tr><td>{{training.type}}</td><td>{{training.date}}</td></tr>
+  {{/each}}
+</table>
+
+
+<h4>Course Reviews</h4>
+{{input placeholder="Course Name" value = courseName}}
+{{input placeholder="Internal" value = internal type="date"}}
+{{input placeholder="External" value = external type="date"}}
+{{input placeholder="QM Fun" value = qmfun type="date"}}
+
+
+<select>
+{{#each reviewTypes as |review| }}
+  <option value = {{review.name}}> {{review.name}} </option>
+{{/each}}
+</select>
+
+
+
+<button type="button" class="btn btn-xs btn-primary"  {{action "addReview" faculty}}><span class="glyphicon glyphicon-plus"></span>Add Review</button>
