@@ -1,8 +1,10 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  type: DS.attr('string'),
   faculty: DS.belongsTo('faculty'),
   courseName:DS.attr('string'),
-  date:DS.attr("date")
+  internalDate:DS.attr("date"),
+  externalDate:DS.attr("date"),
+  funDate:DS.attr("date"),
+  recertificationDate:DS.attr("date")
 });

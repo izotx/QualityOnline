@@ -19,12 +19,10 @@ export default Ember.Component.extend({
 
    addTraining: function(date){
      var training = Ember.$("#trainingSelect").val()
-     console.log(training);
-     console.log(date);
      let record = this.store.createRecord('training',
      {
         type:training,
-        date:Date(date)
+        date:date
      });
 
      this.facultyModel.get('training').pushObject(record);
@@ -35,14 +33,32 @@ export default Ember.Component.extend({
 
 
    },
-   removeTraining: function(id){
+   deleteTraining: function(training){
+      training.deleteRecord();
+      training.save();
+
+      //  this.facultyModel.get('training').remove(training);
+       //
+      //  this.facultyModel.save()
 
    },
-   addReview: function(){
+   addReview: function(courseName, internalDate,externalDate,funDate,recertificationDate){
+     let record = this.store.createRecord('review',
+     {
+     courseName:courseName,
+     internalDate:internalDate,
+     externalDate:externalDate,
+     funDate:funDate,
+     recertificationDate:recertificationDate
+   });
+   this.facultyModel.get('reviews').pushObject(record);
+   this.facultyModel.save();
+   record.save();
 
    },
-   removeReview: function(id){
-
+   deleteReview: function(record){
+      record.deleteRecord();
+      record.save();
    },
   }
   //,
