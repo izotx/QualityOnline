@@ -1,7 +1,9 @@
 import Ember from 'ember';
+import config from '../config/environment';
+// import firebase from 'firebase/app';
 
 export default Ember.Component.extend({
-
+  firebase: Ember.inject.service(),
   constants : Ember.inject.service('constants'),
 
   init(){
@@ -16,6 +18,40 @@ export default Ember.Component.extend({
   },
 
   actions: {
+
+    updateProfilePhoto(faculty){
+          var fapp = undefined;
+          try{
+            fapp  = firebase.app()//.App.name
+          }
+          catch(e){
+            fapp = firebase.initializeApp(config.firebase);
+          }
+
+          let image = document.getElementById( 'profile_image' );
+          let storeName = name.replace( / /g, '' );
+          let storageRef = fapp.storage().ref();
+          let file = image.files[0];
+          let metadata = {
+              'contentType' : file.type
+          };
+
+          let uploadTask = storageRef.child( `faculty_images/${file.name}` ).put( file, metadata );
+
+          uploadTask.on( 'state_changed', null, function( error ){
+              console.error( 'Upload Failed:', error );
+          }, function(){
+              console.log( 'Uploaded', uploadTask.snapshot.totalBytes, 'bytes.' );
+              console.log( uploadTask.snapshot.metadata );
+              let uploadUrl = uploadTask.snapshot.metadata.downloadURLs[0];
+              console.log( 'File available at ', uploadUrl );
+              faculty.set('profile_image',uploadUrl)
+              faculty.save()
+          } );
+
+          // Tell the route to hide the client form.
+          //this.send( 'hideAddClientForm' );
+      },
 
    addTraining: function(date){
      var training = Ember.$("#trainingSelect").val()

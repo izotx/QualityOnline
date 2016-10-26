@@ -13,7 +13,7 @@ module.exports = function(environment) {
         storageBucket: "qualityonline-fb396.appspot.com",
         messagingSenderId: "631911141512"
       },
-      torii: {
+       torii: {
           sessionServiceName: 'session'
         },
     locationType: 'hash',

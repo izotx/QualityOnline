@@ -1,5 +1,16 @@
 {{yield}}
 
+{{#if facultyModel.profile_image}}
+  <img width="100px" src="{{facultyModel.profile_image}}"/>
+{{else}}
+  <img width="100px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT9mVn3mUPFCZZPcSiOEffeep1C1NpCXGEr84xY9HYORJKxfvw"/>
+{{/if}}
+
+<div id="newClient">
+      {{input type="file" id="profile_image" value=profileImage}}
+    <div class="btn btn-xs btn-primary"  {{action "updateProfilePhoto" facultyModel}}>Change Profile Picture</div>
+</div>
+
 <h4>{{facultyModel.firstname}}
   {{facultyModel.lastname}}
   {{facultyModel.email}}

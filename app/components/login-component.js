@@ -39,7 +39,7 @@ export default Ember.Component.extend({
         //
         // }
 
-        console.log(this.get('session'));
+      //  console.log(this.get('session'));
 
 
         this.get('session').open('firebase', {
