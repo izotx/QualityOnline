@@ -1,17 +1,31 @@
 {{yield}}
 
-{{input placeholder="Salutation" value = salutation}}
-{{input placeholder="First Name" value = firstname}}
-{{input placeholder="Last Name" value = lastname}}
-{{input placeholder="Email" value = email}}
- <!-- onchange={{action "updateValue" value="target.value"}} onchange={{action "updateValue" value="target.value"}}  -->
-<select id="departmentSelect">
-  {{#each departments as |department| }}
-    <option  value={{department.id}}>{{department.name}}</option>
-  {{/each}}
-</select>
 
-<button type="button" class="btn btn-xs btn-info"  {{action "addFaculty" salutation firstname lastname email}}>Add Faculty</button>
+{{#if session.isAuthenticated}}
+
+{{#if editMode}}
+  <button {{action 'editMode'}}>Finish Editing</button>
+  {{input placeholder="Salutation" value = salutation}}
+  {{input placeholder="First Name" value = firstname}}
+  {{input placeholder="Last Name" value = lastname}}
+  {{input placeholder="Email" value = email}}
+   <!-- onchange={{action "updateValue" value="target.value"}} onchange={{action "updateValue" value="target.value"}}  -->
+  <select id="departmentSelect">
+    {{#each departments as |department| }}
+      <option  value={{department.id}}>{{department.name}}</option>
+    {{/each}}
+  </select>
+
+  <button type="button" class="btn btn-xs btn-info"  {{action "addFaculty" salutation firstname lastname email}}>Add Faculty</button>
+  <hr>
+  <br>
+{{else}}
+  <button {{action 'editMode'}}>Edit</button>
+ {{/if}}
+
+ <br>
+
+{{/if}}
 
 <table class="table table-striped">
 <tr>
@@ -21,7 +35,7 @@
   <th>Last Name</th>
   <th>Email</th>
   <th>Department</th>
-  <th>Details</th>
+<th>Details</th>
 </tr>
 {{#each model as |faculty| }}
   <tr><td></td>
@@ -31,7 +45,9 @@
       <td>{{faculty.email}}</td>
       <td>{{faculty.department.name}}</td>
       <td>{{#link-to 'faculty.faculty' faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td>
+      {{#if editMode}}
       <td><button type="button" class="btn btn-xs btn-danger"  {{action "deleteFaculty" faculty}}><span class="glyphicon glyphicon-remove"></span></button></td>
+      {{/if}}
     </tr>
 {{/each}}
 </table>

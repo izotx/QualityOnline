@@ -5,16 +5,17 @@
 <h3>All Departments </h3>
 {{/if}}
 
-{{input placeholder="Department" value = departmentName}}
- <!-- onchange={{action "updateValue" value="target.value"}} onchange={{action "updateValue" value="target.value"}}  -->
-<select id="collegeSelect">
-  {{#each model.colleges as |college| }}
-    <option  value={{college.id}}>{{college.name}}</option>
-  {{/each}}
-</select>
+{{#if session.isAuthenticated}}
+  <!-- turn on and off editing -->
+  {{input placeholder="Department" value = departmentName}}
+   <!-- onchange={{action "updateValue" value="target.value"}} onchange={{action "updateValue" value="target.value"}}  -->
+  <select id="collegeSelect">
+    {{#each model.colleges as |college| }}
+      <option  value={{college.id}}>{{college.name}}</option>
+    {{/each}}
+  </select>
 
-<button {{action 'addDepartment' departmentName}}>Add</button>
-
+  <button {{action 'addDepartment' departmentName}}>Add</button>
 
 
 <table>
@@ -37,6 +38,23 @@
 
   <td><button {{action 'departmentChanged' department.id}}>Save</button> </td>
   <td><button {{action "deleteDepartment" department.id}}>Delete</button> </td>
+</tr>
+{{/each}}
+</table>
+<hr>
+{{/if}}
+<!-- END of logged in  -->
+
+
+<br>
+<table>
+  <tr><th>Department</th><th>College</th><th>Details</th></tr>
+
+{{#each model.college.departments as |department|}}
+  <tr><td>{{department.name }}</td>
+    <td>{{department.college.name}}</td>
+  <td>{{#link-to "department"}}Details{{/link-to}}</td>
+<!-- department.id -->
 </tr>
 {{/each}}
 </table>

@@ -1,12 +1,12 @@
 {{yield}}
 {{#if session.isAuthenticated}}
+  {{#if editMode}}
+    <button {{action 'editMode'}}>Finish Editing</button>
+  {{else}}
+    <button {{action 'editMode'}}>Edit</button>
+   {{/if}}
 {{/if}}
 
-{{#if editMode}}
-<button {{action 'editMode'}}>Finish Editing</button>
-{{else}}
-<button {{action 'editMode'}}>Edit</button>
-{{/if}}
 <br/>
 
 {{#if editMode}}

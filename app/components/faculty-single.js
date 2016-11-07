@@ -5,7 +5,7 @@ import config from '../config/environment';
 export default Ember.Component.extend({
   firebase: Ember.inject.service(),
   constants : Ember.inject.service('constants'),
-
+    session: Ember.inject.service('session'),
   init(){
     this._super(...arguments)
     var constants = this.get('constants')

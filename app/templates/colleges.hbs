@@ -1,17 +1,18 @@
-<h2>Quality Online by College</h2>
+<h3>Quality Online by College</h3>
 {{outlet}}
   {{#if session.isAuthenticated}}
   {{input placeholder="College" value = collegeName}}
   <button {{action 'addCollege' collegeName}}>Add</button>
   {{/if}}
 
-<ul>
+<table>
   {{#each model as |college|}}
+  <tr>
     <!-- <li>{{college.name}}{{#link-to "departments"  query-params college=college.id }}Details{{/link-to}}</li> -->
   <!-- (query-params college = college.id) -->
-    <li>{{college.name}}{{#link-to "departmentscontroller" college.name (query-params college=college.id) }}Details{{/link-to}}</li>
+    <td width="130px">{{college.name}}</td><td>{{#link-to "departmentscontroller" college.name (query-params college=college.id) }}Details{{/link-to}}</td>  </tr>
   {{/each}}
-</ul>
+</table>
 
 {{log model}}
 
