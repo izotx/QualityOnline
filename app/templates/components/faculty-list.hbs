@@ -1,6 +1,5 @@
 {{yield}}
 
-
 {{#if session.isAuthenticated}}
 
 {{#if editMode}}
@@ -28,7 +27,7 @@
 {{/if}}
 
 <table class="table table-striped">
-<tr>
+ <thead class="thead-inverse">
   <th>Avatar</th>
   <th>Salutation</th>
   <th>First Name</th>
@@ -36,7 +35,8 @@
   <th>Email</th>
   <th>Department</th>
 <th>Details</th>
-</tr>
+</thead>
+<tbody>
 {{#each model as |faculty| }}
   <tr><td></td>
       <td>{{faculty.salutation}}</td>
@@ -46,10 +46,11 @@
       <td>{{faculty.department.name}}</td>
       <td>{{#link-to 'faculty.faculty' faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td>
       {{#if editMode}}
-      <td><button type="button" class="btn btn-xs btn-danger"  {{action "deleteFaculty" faculty}}><span class="glyphicon glyphicon-remove"></span></button></td>
+        <td><button type="button" class="btn btn-xs btn-danger"  {{action "deleteFaculty" faculty}}><span class="glyphicon glyphicon-remove"></span></button></td>
       {{/if}}
     </tr>
 {{/each}}
+</tbody>
 </table>
 
 

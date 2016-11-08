@@ -1,60 +1,74 @@
-{{outlet}}
-{{#if model.college}}
-<h3>{{model.college.name}}</h3>
-{{else}}
-<h3>All Departments </h3>
-{{/if}}
+<!-- {{outlet}} -->
 
-{{#if session.isAuthenticated}}
-  <!-- turn on and off editing -->
-  {{input placeholder="Department" value = departmentName}}
-   <!-- onchange={{action "updateValue" value="target.value"}} onchange={{action "updateValue" value="target.value"}}  -->
-  <select id="collegeSelect">
-    {{#each model.colleges as |college| }}
-      <option  value={{college.id}}>{{college.name}}</option>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+    <div class="panel-heading">
+      {{#if model.college}}
+      <h3>{{model.college.name}}</h3>
+      {{else}}
+    <h3>All Departments </h3>
+    {{/if}}
+    </div>
+
+
+    {{#if session.isAuthenticated}}
+      <!-- turn on and off editing -->
+      {{input placeholder="Department" value = departmentName}}
+       <!-- onchange={{action "updateValue" value="target.value"}} onchange={{action "updateValue" value="target.value"}}  -->
+      <select id="collegeSelect">
+        {{#each model.colleges as |college| }}
+          <option  value={{college.id}}>{{college.name}}</option>
+        {{/each}}
+      </select>
+
+      <button {{action 'addDepartment' departmentName}}>Add</button>
+
+
+    <table class="table">
+      <thead><th>Department</th><th>College</th><th>Details</th><th>Edit</th> </thead>
+
+    <tbody>
+    {{#each model.college.departments as |department|}}
+      <tr><td>{{input id=department.id placeholder="Department" value = department.name }}</td>
+        <td><select id="select{{department.id}}" >
+        {{#each model.colleges as |college| }}
+          {{#if (eq department.college.id  college.id)}}
+              <option value={{college.id}} selected="true">{{college.name}}</option>
+            {{else}}
+            <option value={{college.id}}>{{college.name}}</option>
+          {{/if}}
+        {{/each}}
+      </select></td>
+      <td>{{#link-to "department" department}}Details{{/link-to}}</td>
+    <!-- department.id -->
+
+      <td><button {{action 'departmentChanged' department.id}}>Save</button> </td>
+      <td><button {{action "deleteDepartment" department.id}}>Delete</button> </td>
+    </tr>
     {{/each}}
-  </select>
-
-  <button {{action 'addDepartment' departmentName}}>Add</button>
-
-
-<table>
-  <tr><th>Department</th><th>College</th><th>Details</th><th>Edit</th> </tr>
+  </tbody>
+    </table>
+    <hr>
+    {{/if}}
+    <!-- END of logged in  -->
 
 
-{{#each model.college.departments as |department|}}
-  <tr><td>{{input id=department.id placeholder="Department" value = department.name }}</td>
-    <td><select id="select{{department.id}}" >
-    {{#each model.colleges as |college| }}
-      {{#if (eq department.college.id  college.id)}}
-          <option value={{college.id}} selected="true">{{college.name}}</option>
-        {{else}}
-        <option value={{college.id}}>{{college.name}}</option>
-      {{/if}}
+    <br>
+    <table class="table">
+      <thead><th>Department</th><th>College</th><th>Details</th></thead>
+    <tbody>
+    {{#each model.college.departments as |department|}}
+      <tr><td>{{department.name }}</td>
+        <td>{{department.college.name}}</td>
+      <td>{{#link-to "department" department}}Details{{/link-to}}</td>
+    <!-- department.id -->
+    </tr>
     {{/each}}
-  </select></td>
-  <td>{{#link-to "department"}}Details{{/link-to}}</td>
-<!-- department.id -->
-
-  <td><button {{action 'departmentChanged' department.id}}>Save</button> </td>
-  <td><button {{action "deleteDepartment" department.id}}>Delete</button> </td>
-</tr>
-{{/each}}
-</table>
-<hr>
-{{/if}}
-<!-- END of logged in  -->
+  </tbody>
+    </table>
 
 
-<br>
-<table>
-  <tr><th>Department</th><th>College</th><th>Details</th></tr>
-
-{{#each model.college.departments as |department|}}
-  <tr><td>{{department.name }}</td>
-    <td>{{department.college.name}}</td>
-  <td>{{#link-to "department"}}Details{{/link-to}}</td>
-<!-- department.id -->
-</tr>
-{{/each}}
-</table>
+  </div>
+  </div>
+</div>

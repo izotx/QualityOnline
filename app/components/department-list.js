@@ -11,47 +11,47 @@ export default Ember.Component.extend({
   actions:{
     editMode(){
       if( this.get('editMode')){
-          this.set('editMode',false)
+          this.set('editMode',false);
       }else{
-          this.set('editMode',true)
+          this.set('editMode',true);
       }
     },
      departmentChanged:function(value){
-       var selectId = "select"+value
-       var collegeId = Ember.$("#"+selectId).val()
-       var departmentName = Ember.$("#"+value).val()
-       var store = this.store
+       var selectId = "select"+value;
+       var collegeId = Ember.$("#"+selectId).val();
+       var departmentName = Ember.$("#"+value).val();
+       var store = this.store;
        store.findRecord('department',value).then(function(department){
               store.findRecord('college', collegeId).then(function(college){
-              department.set('college',college)
-              department.name = departmentName
-              college.save()
-              department.save()
+              department.set('college',college);
+              department.name = departmentName;
+              college.save();
+              department.save();
             }
-          )
+          );
        });
      },
      deleteDepartment:function(value){
        console.log("Department to Delete  "+value);
-       var store = this.store
+       var store = this.store;
        store.findRecord('department',value).then(function(department){
          console.log(department);
-         department.deleteRecord()
-         department.save()
-       })
+         department.deleteRecord();
+         department.save();
+       });
      },
 
 
     addDepartment(name){
 
-        var collegeId = Ember.$("#collegeSelect").val()
+        var collegeId = Ember.$("#collegeSelect").val();
 
         let college = this.store.peekRecord('college', collegeId);
 
         if (college){
             let department = this.store.createRecord('department',{
                 name:name
-            })
+            });
             college.get('departments').pushObject(department);
             department.save();
         }

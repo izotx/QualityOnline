@@ -1,9 +1,7 @@
-http://emberjs.jsbin.com/kexamedo/3/edit?html,css,js,output
-
-
 import Ember from 'ember';
 import config from '../config/environment';
 // import firebase from 'firebase/app';
+//// http://emberjs.jsbin.com/kexamedo/3/edit?html,css,js,output
 
 export default Ember.Component.extend({
   firebase: Ember.inject.service(),

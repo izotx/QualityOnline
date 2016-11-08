@@ -1,4 +1,9 @@
 {{outlet}}
-<h3>Faculty</h3>
-{{log model}}
-{{faculty-list model = model action="showDetails"}}
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+    <div class="panel-heading"><h3>Faculty</h3></div>
+      {{faculty-list model = model action="showDetails"}}
+  </div>
+</div>
+</div>

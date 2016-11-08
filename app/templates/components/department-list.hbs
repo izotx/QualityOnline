@@ -22,8 +22,9 @@
 {{/if}}
 
 {{#if editMode}}
-<table>
-  <tr><th>Department</th><th>College</th><th>Details</th><th>Edit</th> </tr>
+<table class="table">
+  <thead><th>Department</th><th>College</th><th>Details</th><th>Edit</th> </thead>
+  <tbody>
 {{#each model.departments as |department|}}
   <tr><td>{{input id=department.id placeholder="Department" value = department.name }}</td>
     <td><select id="select{{department.id}}" >
@@ -42,12 +43,13 @@
   <td><button {{action "deleteDepartment" department.id}}>Delete</button> </td>
 </tr>
 {{/each}}
-
+</tbody>
 </table>
 {{else}}
 
-<table>
-<tr><th>Department</th><th>College</th><th>Details</th> </tr>
+<table class="table">
+<thead><th>Department</th><th>College</th><th>Details</th> </thead>
+<tbody>
 {{#each model.departments as |department|}}
   <tr><td>{{department.name }}</td>
     <td>{{department.college.name}}</td>
@@ -55,5 +57,6 @@
   <td>{{#link-to "department" department}}Details{{/link-to}}</td>
 </tr>
 {{/each}}
+</tbody>
 </table>
 {{/if}}

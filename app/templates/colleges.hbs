@@ -1,18 +1,38 @@
-<h3>Quality Online by College</h3>
-{{outlet}}
-  {{#if session.isAuthenticated}}
-  {{input placeholder="College" value = collegeName}}
-  <button {{action 'addCollege' collegeName}}>Add</button>
-  {{/if}}
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3>Quality Online by College</h3>
+    </div>
+    {{#if session.isAuthenticated}}
+    {{input placeholder="College" value = collegeName}}
+    <button {{action 'addCollege' collegeName}}>Add</button>
+    {{/if}}
 
-<table>
-  {{#each model as |college|}}
-  <tr>
-    <!-- <li>{{college.name}}{{#link-to "departments"  query-params college=college.id }}Details{{/link-to}}</li> -->
-  <!-- (query-params college = college.id) -->
-    <td width="130px">{{college.name}}</td><td>{{#link-to "departmentscontroller" college.name (query-params college=college.id) }}Details{{/link-to}}</td>  </tr>
-  {{/each}}
-</table>
+    <table class="table">
+      <thead class="table-inverse">
+        <th>College</th>
+      </thead>
+      <tbody>
+      {{#each model as |college|}}
+
+
+
+      <tr>
+        <!-- <li>{{college.name}}{{#link-to "departments"  query-params college=college.id }}Details{{/link-to}}</li> -->
+      <!-- (query-params college = college.id) -->
+        <td width="130px">{{college.name}}</td><td>{{#link-to "departmentscontroller" college.name (query-params college=college.id) }}Details{{/link-to}}</td>  </tr>
+      {{/each}}
+      </tbody>
+    </table>
+
+  </div>
+</div>
+</div>
+
+{{outlet}}
+
+
 
 {{log model}}
 

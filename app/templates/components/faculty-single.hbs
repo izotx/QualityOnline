@@ -1,89 +1,117 @@
-{{yield}}
 
-{{#if facultyModel.profile_image}}
-  <img width="100px" src="{{facultyModel.profile_image}}"/>
-{{else}}
-  <img width="100px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT9mVn3mUPFCZZPcSiOEffeep1C1NpCXGEr84xY9HYORJKxfvw"/>
-{{/if}}
+  <div class="jumbotron">
+    <!-- <div class="container"> -->
 
-{{#if session.isAuthenticated}}
-<div id="newClient">
-      {{input type="file" id="profile_image" value=profileImage}}
-    <div class="btn btn-xs btn-primary"  {{action "updateProfilePhoto" facultyModel}}>Change Profile Picture</div>
+       <div class="row">
+               <div class="col-sm-3">
+                {{#if facultyModel.profile_image}}
+                  <img width="100px" src="{{facultyModel.profile_image}}" class="img-circle"/>
+                {{else}}
+                  <img width="100px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT9mVn3mUPFCZZPcSiOEffeep1C1NpCXGEr84xY9HYORJKxfvw"  class="img-circle"/>
+                {{/if}}
+                {{#if session.isAuthenticated}}
+                <div id="newClient">
+                      {{input type="file" id="profile_image" value=profileImage}}
+                    <div class="btn btn-xs btn-primary"  {{action "updateProfilePhoto" facultyModel}}>Change Profile Picture</div>
+                </div>
+                {{/if}}
+
+              </div>
+               <div class="col-sm-9">
+                <h2>{{facultyModel.title}} {{facultyModel.firstname}} {{facultyModel.lastname}}</h2>
+                <p>  {{facultyModel.department.name}} </p>
+                <p>  {{facultyModel.email}} </p>
+              </div>
+    </div>
+ <!-- </div> -->
 </div>
-{{/if}}
 
-{{#if session.isAuthenticated}}
-<h4>{{facultyModel.firstname}}
-  {{facultyModel.lastname}}
-  {{facultyModel.email}}
-  {{facultyModel.department.name}}
-</h4>
-{{#if session.isAuthenticated}}
+  <!-- <div class="container"> -->
+  <div class="row">
 
-<h4>Training</h4>
+        <div class="col-md-12">
+          <div class="panel panel-default">
+          <div class="panel-heading">Training History</div>
 
-{{#if session.isAuthenticated}}
-  {{input placeholder="Training" value = trainingDate type="date"}}
-  <select id="trainingSelect">
-    {{#each trainingTypes as |training| }}
-    <option value = {{training.name}}> {{training.name}} </option>
-    {{/each}}
-  </select>
-  <button type="button" class="btn btn-xs btn-primary"  {{action "addTraining" trainingDate}}><span class="glyphicon glyphicon-plus"></span>Add Training</button>
+          <table class="table table-striped">
+             <thead class="thead-inverse">
+            <th>Training Type</th><th>Date</th>
+              {{#if session.isAuthenticated}}
+              <th>Edit</th>
+              {{/if}}
+          </thead>
+          <tbody>
+            {{#each facultyModel.training as |training|}}
 
-
-
-{{/if}}
-<!-- //add training -->
-
-<table class="table table-striped">
-
-  <tr><th>Type</th><th>Date</th>
-    {{#if session.isAuthenticated}}
-    <th>Edit</th>
-    {{/if}}
-  </tr>
-  {{#each facultyModel.training as |training|}}
-  <tr><td>{{training.type}}</td><td>{{training.date}}</td>
-    {{#if session.isAuthenticated}}
-      <td><button type="button" class="btn btn-xs btn-danger"  {{action "deleteTraining" training}}><span class="glyphicon glyphicon-remove"></span></button></td>
-    {{/if}}
-  </tr>
-
-  {{/each}}
-</table>
-
-
-<h4>Course Reviews</h4>
-{{#if session.isAuthenticated}}
-Course Name:{{input placeholder="Course Name" value = courseName}}
-Internal Review: {{input placeholder="Internal" value = internalDate type="date"}}
-External Review:{{input placeholder="External" value = externalDate type="date"}}
-QM Fun:{{input placeholder="QM Fun" value = funDate type="date"}}
-Recertification: {{input placeholder="Recerification" value = recertificationDate type="date"}}
-
-<button type="button" class="btn btn-xs btn-primary"  {{action "addReview" courseName internalDate externalDate  funDate recertificationDate}}><span class="glyphicon glyphicon-plus"></span>Add Review</button>
-{{/if}}
-
-<table class="table table-striped">
-
-  <tr>
-    <th>Name</th>
-    <th>Internal</th>
-    <th>External</th>
-    <th>QM Fun</th>
-    <th>Recertification</th>
-  </tr>
-  {{#each facultyModel.reviews as |review|}}
-  <tr><td>{{review.courseName}}</td>
-  <td>{{review.internalDate}}</td>
-  <td>{{review.externalDate}}</td>
-  <td>{{review.funDate}}</td>
-  <td>{{review.recertificationDate}}</td>
+            <tr>
+              <td>{{training.type}}</td><td>{{training.date}}</td>
+              {{#if session.isAuthenticated}}
+                <td><button type="button" class="btn btn-xs btn-danger"  {{action "deleteTraining" training}}><span class="glyphicon glyphicon-remove"></span></button></td>
+              {{/if}}
+            </tr>
+            {{/each}}
+            </tbody>
+          </table>
+        </div>
+        </div>
+  </div>
+<!-- </div> -->
+<div class = "row">
   {{#if session.isAuthenticated}}
-    <td><button type="button" class="btn btn-xs btn-danger"  {{action "deleteReview" review}}><span class="glyphicon glyphicon-remove"></span></button></td>
+    {{input placeholder="Training" value = trainingDate type="date"}}
+    <select id="trainingSelect">
+      {{#each trainingTypes as |training| }}
+      <option value = {{training.name}}> {{training.name}} </option>
+      {{/each}}
+    </select>
+
+    <button type="button" class="btn btn-xs btn-primary"  {{action "addTraining" trainingDate}}><span class="glyphicon glyphicon-plus"></span>Add Training</button>
+
   {{/if}}
-  </tr>
-  {{/each}}
-</table>
+</div>
+
+
+<div class="row">
+      <div class="col-md-12">
+      <div class="panel panel-default">
+      <div class="panel-heading">Course Reviews</div>
+
+        <table class="table table-stripped">
+         <thead class="thead-inverse">
+            <th>Name</th>
+            <th>Internal</th>
+            <th>External</th>
+            <th>QM Fun</th>
+            <th>Recertification</th>
+         </thead>
+        <tbody>
+          {{#each facultyModel.reviews as |review|}}
+          <tr>
+            <td>{{review.courseName}}</td>
+            <td>{{review.internalDate}}</td>
+            <td>{{review.externalDate}}</td>
+            <td>{{review.funDate}}</td>
+            <td>{{review.recertificationDate}}</td>
+            {{#if session.isAuthenticated}}
+              <td><button type="button" class="btn btn-xs btn-danger"  {{action "deleteReview" review}}><span class="glyphicon glyphicon-remove"></span></button></td>
+            {{/if}}
+          </tr>
+          {{/each}}
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>
+
+
+<div class="row">
+  {{#if session.isAuthenticated}}
+    Course Name:{{input placeholder="Course Name" value = courseName}}
+    Internal Review: {{input placeholder="Internal" value = internalDate type="date"}}
+    External Review:{{input placeholder="External" value = externalDate type="date"}}
+    QM Fun:{{input placeholder="QM Fun" value = funDate type="date"}}
+    Recertification: {{input placeholder="Recerification" value = recertificationDate type="date"}}
+
+    <button type="button" class="btn btn-xs btn-primary"  {{action "addReview" courseName internalDate externalDate  funDate recertificationDate}}><span class="glyphicon glyphicon-plus"></span>Add Review</button>
+  {{/if}}
+</div>
