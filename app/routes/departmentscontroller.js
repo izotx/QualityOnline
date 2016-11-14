@@ -25,10 +25,10 @@ export default Ember.Route.extend({
     console.log(this.queryParams.college);
 
     var collegeId = params.college;
-    var store = this.store
+    var store = this.store;
 
     var college =  this.store.findRecord('college',collegeId);
-    var departments = this.store.findAll('department')
+    var departments = this.store.findAll('department');
 
 
     var multiModel = Ember.Object.create(

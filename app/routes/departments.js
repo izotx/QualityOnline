@@ -19,9 +19,9 @@ export default Ember.Route.extend({
   actions:{
     editMode(){
       if( this.get('editMode')){
-          this.set('editMode',false)
+          this.set('editMode',false);
       }else{
-          this.set('editMode',true)
+          this.set('editMode',true);
       }
     }
   },
@@ -53,15 +53,15 @@ console.log("Before Model");
     console.log(this.queryParams);
     var collegeId = this.get('college');
 
-    var store = this.store
+  //  var store = this.store;
     var departments;
     if (collegeId){
         departments =  this.store.findRecord('college',collegeId).then(function(college){
-            return college.departments
-        })
+            return college.departments;
+        });
     }
     else{
-      departments = this.store.findAll('department')
+      departments = this.store.findAll('department');
 
     }
 

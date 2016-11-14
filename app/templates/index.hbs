@@ -6,8 +6,14 @@
     </p>
     </div>
     <h5>Quality Course Components</h5>
+    <div class="row">
+{{log colleges}}
+      {{#each model as |college|}}
+        {{quality-chart college=college}}
+      {{/each}}
 
 
+    </div>
     <div class="col-lg-4">
       <div class="panel">
           <div class= "panel-body">

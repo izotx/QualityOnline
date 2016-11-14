@@ -80,6 +80,11 @@ export default Ember.Component.extend({
 
    },
    addReview: function(courseName, internalDate,externalDate,funDate,recertificationDate){
+
+     console.log(courseName);
+     console.log(internalDate);
+     console.log(externalDate);
+     console.log(funDate);
      let record = this.store.createRecord('review',
      {
      courseName:courseName,

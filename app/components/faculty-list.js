@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import Table from 'ember-light-table';
 
-const { isEmpty, computed } = Ember;
+  const { isEmpty, computed } = Ember;
 
   export default Ember.Component.extend({
 
