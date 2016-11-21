@@ -1,4 +1,17 @@
 {{yield}}
-<h1>Chart Start</h1>
- <div id="chartdiv{{college.name}}" style="width: 640px; height: 400px;"></div>
-<h1>Chart End</h1>
+<div class="col-lg-4  department">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="panel-title"><a href="">{{college.name}} <i class="fa fa-arrow-circle-right"></i> </a></h3>
+    </div>
+    <div class="panel-body">
+      <div id="chartdiv{{college.name}}" style="width: 100%; height: 200px;"></div>
+
+      <div>
+          <a class="btn btn-info"  href="">View Details</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div id="chartdiv{{college.name}}" style="width: 640px; height: 400px;"></div> -->

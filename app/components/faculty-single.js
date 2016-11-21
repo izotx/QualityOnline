@@ -85,13 +85,24 @@ export default Ember.Component.extend({
      console.log(internalDate);
      console.log(externalDate);
      console.log(funDate);
+
+
+
+     var iDate = toDate(internalDate);
+     var eDate = toDate(externalDate);
+     var fDate = toDate(funDate);
+     var rDate = toDate(recertificationDate);
+
+
+
+
      let record = this.store.createRecord('review',
      {
      courseName:courseName,
-     internalDate:internalDate,
-     externalDate:externalDate,
-     funDate:funDate,
-     recertificationDate:recertificationDate
+     internalDate:iDate,
+     externalDate:eDate,
+     funDate:fDate,
+     recertificationDate:rDate
    });
    this.facultyModel.get('reviews').pushObject(record);
    this.facultyModel.save();
@@ -113,3 +124,12 @@ export default Ember.Component.extend({
   // }
 
 });
+function toDate(dateString) {
+  if(!dateString){
+      return undefined;
+  }
+  return new Date(dateString);
+
+//  var from = dateString.split("/");
+//  return new Date(from[2], from[1] - 1, from[0]);
+}

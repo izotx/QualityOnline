@@ -4,6 +4,7 @@ import Ember from 'ember';
 const { isEmpty, computed,get,getProperties } = Ember;
 
 export default Ember.Component.extend({
+  constants : Ember.inject.service('constants'),
   chartData: function(){
      return generateChartData();
    }.property(),
@@ -15,102 +16,25 @@ export default Ember.Component.extend({
 
 //college:null,
 
-data:Ember.computed(function(){
+data:function(){
   var college = this.get('college');
   var store = this.store;
 
-//  if(college)
+ var funCount = 0;
+ var internalCount = 0;
+ var externalCount = 0;
+ var training = {};
 
-  console.log("____");
-  console.log(college);
-
-/**
- {faculty.department.college : college}
-*/
-//var cfaculty = [];
-//var departments = college.get('departments');
-//console.log(departments.count);
+ var dqoc = 0;
+ var qotc = 0;
+ var iyoc = 0;
 
 
+ var data = store.query('review',{'faculty.department.college':college}).then(function(reviews){
 
- // college.departments.forEach(function(department){
- //    cfaculty.push(department.faculty);
- // });
+    reviews.forEach(function(review){
 
- var instructors = []
- var departmentsPromise = this.store.query('Department',{college:college}).then(function(departments){
-   departments.forEach(function(dept){
-      var instr = dept.getProperties('faculty','name')
-      instructors.push(instr)
-      console.log("DEPARTMETN");
-   })
-   instructors.forEach(function(i){
-     console.log("_______");
-     console.log(i.name);
-     console.log("_______");
-   });
-//   console.log(instructors);
-
- });
-
- // var departmentsPromise = this.store.query('Department',{college:college}).then(function(departments){
- //  var instructors = []
- //   departments.forEach(function(dept){
- //      var instr = dept.getProperties('instructors')
- //      instructors.push(instr)
- //   }).then(function(instructors)){
- //     instructors.foreach(function(instructor){
- //       var revs = instructor.getProperties('reviews')
- //       revs.forEach(function(review){
- //         var r = review.getProperties('internalDate','externalDate','funDate')
- //         console.log(r);
- //
- //         if(r.internalDate){
- //             internalCount++;
- //         }
- //         if(r.externalDate){
- //             externalCount++;
- //         }
- //         if(r.funDate){
- //             funCount++;
- //         }
- //         console.log(r.internalDate);
- //
- //       });
- //     })
- //   }
- //
-
-
- var rquery = store.findAll('review')
-
-  var data = rquery.then(function(reviews){
-      // console.log("reviews");
-      // console.log(reviews);
-      // reviews.forEach(function(review){
-      //
-      // });
-      // review.filtered.
-      // var filtered = review.forEach(function(r)){
-      //
-      //
-      // }
-
-
-      return reviews
-  }).then(function(reviews){
-      var funCount = 0
-      var internalCount = 0
-      var externalCount = 0
-      //{faculty.department.college:college}
-      store.find('training',1).then(function(trainings){
-      // console.log(trainings);
-
-
-      reviews.forEach(function(review){
-        var r = review.getProperties('internalDate','externalDate','funDate')
-        console.log(r);
-
+        var r = review.getProperties('courseName','internalDate','externalDate','funDate')
         if(r.internalDate){
             internalCount++;
         }
@@ -120,39 +44,88 @@ data:Ember.computed(function(){
         if(r.funDate){
             funCount++;
         }
-        console.log(r.internalDate);
-
-      });
-
-      console.log(internalCount);
-      console.log(externalCount);
-      console.log(funCount);
-
-      // console.log(reviews);
-      trainings.forEach(function(training){
-      var t = training.getProperties()
-
-
-          return trainings
-
-      });
     })
-  });
+
+ }).then(function(){
+   store.query('training',{'faculty.department.college':college}).then(function(trainings){
+     trainings.forEach(function(training){
+         var t = training.getProperties('type');
+         if(t.type){
+           var count = training[t.type] + 1 ;
+           training[t.type] = count;
+
+           if(t.type == 'ATC Teaching Course (TQOC)'){
+             qotc = qotc + 1;
+           }
+           else if(t.type == 'ATC Design Course (DQOC)' ){
+             dqoc = dqoc + 1;
+           }
+           else if(t.type == 'Improving Your Online Course (IYOC)'){
+             iyoc = iyoc + 1
+           }
+         }
+       }
+     );
+
+   });
+  return
+}).then(function(){
+  console.log("End of Query");
+
+  return   [{
+      "label": "DQOC",
+      "value": dqoc,
+      "color": "#6dcb8e"
+    },
+    {
+      "label": "QOTC",
+      "value":qotc,
+      "color": "#6dbb8c"
+    },
+    {
+      "label": "IYOC",
+      "value": iyoc,
+      "color": "#d2ca49"
+    },
+    {
+      "label": "QM FUN",
+      "value": funCount,
+      "color": "#088274"
+    },
+    {
+      "label": "QM CERT",
+      "value": externalCount,
+      "color": "#448ec6"
+    }
+  ];
+})
 
   return data;
-}),
+}.property(),
 
  didRender() {
     this._super(...arguments);
-    var chartData = this.get('chartData');
-    drawHorizontalLinearChart("chartdiv","Quality",chartData,false,100)
+    var ccolege =  this.get('college').getProperties('name');
+//    var chartData = this.get('chartData');
+    var data = this.get('data');
+    data.then(function(d){
+      console.log("Inside");
+      var divName =  "chartdiv"+ccolege.name;
+      drawHorizontalLinearChart(divName,"Quality",d,false,4)
+      console.log(JSON.stringify(d));
 
+    })
+
+    // console.log(data);
 
 
     //
     // this.set('chartData', chartData);
     //
-    // var chart = AmCharts.makeChart( "chartdiv", {
+  //  console.log(chartData);
+
+
+    // var chart = AmCharts.makeChart(divName, {
     //   "type": "serial",
     //   "dataProvider": chartData,
     //   "categoryField": "country",
@@ -161,15 +134,14 @@ data:Ember.computed(function(){
     //     "type": "column"
     //   }]
     // },5000 );
+
+    // chart.addListener("init", ainit);
+    // chart.addListener("rendered", arendered);
+    // console.log("Chart");
+    // console.log(chart);
     //
-    // // chart.addListener("init", ainit);
-    // // chart.addListener("rendered", arendered);
-    // // console.log("Chart");
-    // // console.log(chart);
-    // this.set('chart', chart);
-    //
-    // chart.addListener("rendered", this.ainit.bind(this));
-    // chart.addListener("init", this.arendered.bind(this));
+    //  chart.addListener("rendered", this.ainit.bind(this));
+    //  chart.addListener("init", this.arendered.bind(this));
 
  },
  ainit:function (){
@@ -179,103 +151,20 @@ data:Ember.computed(function(){
  arendered:function(){
  console.log("rendered");
  },
- data1:function(){
-   var store = this.store
-   return new Promise(function(resolve,reject){
-     store.findAll('department').then(function(deparments){
-       resolve(deparments);
-     })});
- },
+
 
   init()
   {
     this._super(...arguments);
-    this.get('data')
-//  var store = this.store
-  // this.get('data1').then(function(deparments){
-  //
-  //
-  // })
-
-  // var promise = new Promise(function(resolve,reject){
-  //   store.findAll('department').then(function(deparments){
-  //     resolve(deparments);
-  //   })});
-
-  //  promise()
-
-    //console.log();
-
-    // console.log(this.store);
-
-    //
-    // this.get("departments").forEach(function(college){
-    //     console.log(college);
-    // });
-
-
+    // this.get('data')
 
   },
   didInsertElement() {
     this._super(...arguments);
     // getData(this.store);
     var store = this.store
-    // var reviews = store.findAll('review').then(function(reviews){
-    //     console.log("reviews");
-    //     // console.log(reviews);
-    //     reviews.forEach(function(review){
-    //         console.log(review.courseName);
-    //
-    //     });
-    //
-    // }).then(function(){
-    //     store.findAll('training').then(function(trainings){
-    //     console.log("training");
-    //     // console.log(trainings);
-    //     trainings.forEach(function(training){
-    //         console.log(training.type);
-    //
-    //     });
-    //
-    //   })
-    // });
-
-    // var deparments = this.store.findAll('department').then(function(departments){
-    //   departments.forEach(function(department){
-    //     console.log(college);
-    //     //calculate number of reviews
-    //     // department.
-    //
-    //
-    //   })
-    //
-    // });
-
-
-
-    // var colleges = this.store.findAll('college');
-    // // //let's say we have a college
-    // // college.departments
-    // colleges.forEach(function(college){
-    //   console.log(college);
-    //
-    // })
   },
 });
-
-function getData(store){
-
-  console.log("Get Data");
-    //get all colleges
-    var colleges = store.findAll('college');
-    // //let's say we have a college
-    // college.departments
-    colleges.forEach(function(college){
-      console.log(college);
-
-    })
-
-}
 
 
 function drawHorizontalLinearChart(div,title,dataProvider,rotate,maximum){
@@ -336,6 +225,8 @@ function drawHorizontalLinearChart(div,title,dataProvider,rotate,maximum){
        }
 
   });
+
+  //this.set('chart', chart);
   //chart.fontSize = 5;
 
 
