@@ -72,3 +72,14 @@
   </div>
   </div>
 </div>
+
+<div class="col-lg-12">
+  <div class="row">
+
+    {{#each model.college.departments as |department|}}
+      {{quality-chart department = department}}
+    {{/each}}
+
+
+  </div>
+</div>

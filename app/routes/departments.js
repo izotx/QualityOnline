@@ -2,18 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
 
-  // queryParams:['college'],
-  // college:null,
-
-  // colleges() {
-  //   var multimodel = Ember.Object.create(
-  //     {
-  //       let departments = this.store.findAll('department'),
-  //       let colleges = this.store.findAll('college')
-  //     });
-  //     return mulitModel;
-  //   // return this.store.findAll('college');
-  // },
 
 
   actions:{
@@ -29,7 +17,7 @@ export default Ember.Route.extend({
 editMode:false,
 
 beforeModel: function(transition,queryParams){
-console.log("Before Model");
+  console.log("Before Model");
   console.log(this.params);
   console.log(queryParams);
 },
@@ -37,18 +25,6 @@ console.log("Before Model");
   model() {
 
     console.log("Inside Model");
-    // return this.store.findAll('department');
-    // var multimodel = Ember.Object.create(
-    //   {
-    //     let departments = this.store.findAll('department');
-    //     let colleges = this.store.findAll('college');
-    //   });
-    //   return mulitModel;
-
-    // .then(function(college){
-    //
-    // })
-
     console.log(this.params);
     console.log(this.queryParams);
     var collegeId = this.get('college');
@@ -62,13 +38,7 @@ console.log("Before Model");
     }
     else{
       departments = this.store.findAll('department');
-
     }
-
-
-    // var depts = this.store.query('department',{
-    //   filter:{college:}
-    // })
 
     var multiModel = Ember.Object.create(
       {

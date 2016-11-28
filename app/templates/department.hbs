@@ -1,7 +1,77 @@
 {{outlet}}
-<h3>Name: {{model.name}}</h3>
-<h3>College: {{model.college.name}}</h3>
 
-<h3>Training</h3>
+<!-- <h3>College: {{model.department.college.name}}</h3> -->
+<div class="row">
 
-<h4>Course Reviews</h4>
+      <div class="col-md-12">
+        <div class="panel panel-default">
+        <div class="panel-heading"><h3> {{model.department.name}}</h3></div>
+   <div class="panel-body">
+
+
+<table class="table table-striped">
+  <caption>Course Reviews</caption>
+ <thead class="thead-inverse">
+    <th>Name</th><th>Last Name</th><th>External</th><th>QM Fun</th> <th>Details</th>
+</thead>
+<tbody>
+{{#each model.reviews as |review| }}
+    <tr><td>{{review.faculty.firstname}}</td><td>{{review.faculty.lastname}}</td><td>{{review.externalDate}}</td><td>{{review.funDate}}</td><td>{{#link-to 'review.faculty.faculty' faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
+{{/each}}
+</tbody>
+</table>
+<!--
+<table class="table table-striped">
+ <thead class="thead-inverse">
+    <th>Name</th><th>Last Name</th><th>Details</th>
+</thead>
+<tbody>
+{{#each model.faculty as |faculty| }}
+    <tr><td>{{faculty.firstname}}</td><td>{{faculty.lastname}}</td><td>{{#link-to 'faculty.faculty' faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
+{{/each}}
+</tbody>
+</table> -->
+<table class="table table-striped">
+  <caption>ATC Teaching Course (TQOC)</caption>
+ <thead class="thead-inverse">
+    <th>Name</th><th>Last Name</th><th>Date</th> <th>Details</th>
+</thead>
+<tbody>
+{{#each model.teaching as |training| }}
+    <tr><td>{{training.faculty.firstname}}</td><td>{{training.faculty.lastname}}</td><td>{{training.date}}</td><td>{{#link-to 'training.faculty.faculty' faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
+{{/each}}
+</tbody>
+</table>
+
+<table class="table table-striped">
+  <caption>Improving Your Online Course (IYOC)</caption>
+ <thead class="thead-inverse">
+    <th>Name</th><th>Last Name</th><th>Date</th> <th>Details</th>
+</thead>
+<tbody>
+{{#each model.improving as |training| }}
+    <tr><td>{{training.faculty.firstname}}</td><td>{{training.faculty.lastname}}</td><td>{{training.date}}</td><td>{{#link-to 'training.faculty.faculty' faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
+{{/each}}
+</tbody>
+</table>
+
+<table class="table table-striped">
+  <caption>ATC Design Course (DQOC)</caption>
+ <thead class="thead-inverse">
+    <th>Name</th><th>Last Name</th><th>Date</th> <th>Details</th>
+</thead>
+<tbody>
+{{#each model.design as |training| }}
+    <tr><td>{{training.faculty.firstname}}</td><td>{{training.faculty.lastname}}</td><td>{{training.date}}</td><td>{{#link-to 'training.faculty.faculty' faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
+{{/each}}
+</tbody>
+</table>
+
+
+
+
+
+      </div> <!--  end of panel body -->
+    </div><!--  end of panel -->
+  </div>
+</div>

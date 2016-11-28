@@ -8,19 +8,6 @@ export default Ember.Route.extend({
  },
   model(params) {
 
-    // return this.store.findAll('department');
-    // var multimodel = Ember.Object.create(
-    //   {
-    //     let departments = this.store.findAll('department');
-    //     let colleges = this.store.findAll('college');
-    //   });
-    //   return mulitModel;
-
-    // .then(function(college){
-    //
-    // })
-
-//    console.log(this.params);
     console.log(params.college);
     console.log(this.queryParams.college);
 

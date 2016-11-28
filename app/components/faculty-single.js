@@ -59,8 +59,8 @@ export default Ember.Component.extend({
      let record = this.store.createRecord('training',
      {
         type:training,
-        date:date
-     });
+        date:toDate(date)
+      });
 
      this.facultyModel.get('training').pushObject(record);
      this.facultyModel.save()
@@ -80,13 +80,6 @@ export default Ember.Component.extend({
 
    },
    addReview: function(courseName, internalDate,externalDate,funDate,recertificationDate){
-
-     console.log(courseName);
-     console.log(internalDate);
-     console.log(externalDate);
-     console.log(funDate);
-
-
 
      var iDate = toDate(internalDate);
      var eDate = toDate(externalDate);

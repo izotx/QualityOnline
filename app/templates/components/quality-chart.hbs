@@ -1,14 +1,32 @@
 {{yield}}
+<!-- {{log "department"}}
+{{log department}} -->
 <div class="col-lg-4  department">
   <div class="panel panel-info">
     <div class="panel-heading">
-      <h3 class="panel-title"><a href="">{{college.name}} <i class="fa fa-arrow-circle-right"></i> </a></h3>
+      {{#if department}}
+         <h3 class="panel-title">  {{#link-to "department" department.id }}{{department.name}}{{/link-to}} <i class="fa fa-arrow-circle-right"></i> </h3>
+      {{else}}
+         <h3 class="panel-title">  {{#link-to "departmentscontroller" college.name (query-params college=college.id)}}{{college.name}}{{/link-to}} <i class="fa fa-arrow-circle-right"></i> </h3>
+      {{/if}}
+
+
     </div>
     <div class="panel-body">
-      <div id="chartdiv{{college.name}}" style="width: 100%; height: 200px;"></div>
+      {{#if department}}
+        <div id="chartdiv{{department.name}}" style="width: 100%; height: 200px;"></div>
+      {{else}}
+        <div id="chartdiv{{college.name}}" style="width: 100%; height: 200px;"></div>
+      {{/if}}
+      <!-- <div id="chartdiv{{college.name}}" style="width: 100%; height: 200px;"></div> -->
 
       <div>
-          <a class="btn btn-info"  href="">View Details</a>
+        {{#if department}}
+          {{#link-to "department" department.id class="btn btn-info"}}View Details{{/link-to}}
+        {{else}}
+          {{#link-to "departmentscontroller" college.name (query-params college=college.id) class="btn btn-info"}}View Details{{/link-to}}
+        {{/if}}
+
       </div>
     </div>
   </div>
