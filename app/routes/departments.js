@@ -17,9 +17,9 @@ export default Ember.Route.extend({
 editMode:false,
 
 beforeModel: function(transition,queryParams){
-  console.log("Before Model");
-  console.log(this.params);
-  console.log(queryParams);
+  // console.log("Before Model");
+  // console.log(this.params);
+  // console.log(queryParams);
 },
 
   model() {

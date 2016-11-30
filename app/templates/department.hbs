@@ -16,7 +16,7 @@
 </thead>
 <tbody>
 {{#each model.reviews as |review| }}
-    <tr><td>{{review.faculty.firstname}}</td><td>{{review.faculty.lastname}}</td><td>{{review.externalDate}}</td><td>{{review.funDate}}</td><td>{{#link-to 'review.faculty.faculty' faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
+    <tr><td>{{review.faculty.firstname}}</td><td>{{review.faculty.lastname}}</td><td>{{review.externalDate}}</td><td>{{review.funDate}}</td><td>{{#link-to 'faculty.faculty' review.faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
 {{/each}}
 </tbody>
 </table>
@@ -38,7 +38,7 @@
 </thead>
 <tbody>
 {{#each model.teaching as |training| }}
-    <tr><td>{{training.faculty.firstname}}</td><td>{{training.faculty.lastname}}</td><td>{{training.date}}</td><td>{{#link-to 'training.faculty.faculty' faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
+    <tr><td>{{training.faculty.firstname}}</td><td>{{training.faculty.lastname}}</td><td>{{training.date}}</td><td>{{#link-to 'faculty.faculty' training.faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
 {{/each}}
 </tbody>
 </table>
@@ -50,7 +50,7 @@
 </thead>
 <tbody>
 {{#each model.improving as |training| }}
-    <tr><td>{{training.faculty.firstname}}</td><td>{{training.faculty.lastname}}</td><td>{{training.date}}</td><td>{{#link-to 'training.faculty.faculty' faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
+    <tr><td>{{training.faculty.firstname}}</td><td>{{training.faculty.lastname}}</td><td>{{training.date}}</td><td>{{#link-to 'faculty.faculty' training.faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
 {{/each}}
 </tbody>
 </table>
@@ -62,7 +62,7 @@
 </thead>
 <tbody>
 {{#each model.design as |training| }}
-    <tr><td>{{training.faculty.firstname}}</td><td>{{training.faculty.lastname}}</td><td>{{training.date}}</td><td>{{#link-to 'training.faculty.faculty' faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
+    <tr><td>{{training.faculty.firstname}}</td><td>{{training.faculty.lastname}}</td><td>{{training.date}}</td><td>{{#link-to 'faculty.faculty' training.faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
 {{/each}}
 </tbody>
 </table>

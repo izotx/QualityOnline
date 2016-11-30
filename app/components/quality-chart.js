@@ -8,113 +8,255 @@ export default Ember.Component.extend({
   college : null,
 
 
-// data:function(){
-//   var college = this.get('college');
-//   var department = this.get('department'); // Only one of both should be specified, that's how we will identify the query
-//   var store = this.store;
-//
-//  var funCount = 0;
-//  var internalCount = 0;
-//  var externalCount = 0;
-//  var training = {};
-//
-//  var dqoc = 0;
-//  var qotc = 0;
-//  var iyoc = 0;
-//
-//  var reviewQuery;// = undefined;
-//  var trainingQuery;// = undefined;
-//
-//  var depts = store.findAll('department')
-//
-//  if(college){
-//    reviewQuery = store.query('review',{'faculty.department.college':college});
-//    trainingQuery = store.query('training',{'faculty.department.college':college});
-//  }
-//  else if(department){
-//    reviewQuery = store.query('review',{'faculty.department':department});
-//    trainingQuery = store.query('training',{'faculty.department':department});
-//  }
-//
-//
-//  var d =  reviewQuery.then(function(reviews){
-//
-//     reviews.forEach(function(review){
-//         console.log("Review");
-//         var r = review.getProperties('courseName','internalDate','externalDate','funDate')
-//         if(r.internalDate){
-//             internalCount++;
-//         }
-//         if(r.externalDate){
-//             externalCount++;
-//         }
-//         if(r.funDate){
-//             funCount++;
-//         }
-//     })
-//
-//  }).then(function(){
-//    trainingQuery.then(function(trainings){
-//
-//      trainings.forEach(function(training){
-//        console.log("Training");
-//          var t = training.getProperties('type');
-//          if(t.type){
-//            var count = training[t.type] + 1 ;
-//            training[t.type] = count;
-//
-//            if(t.type == 'ATC Teaching Course (TQOC)'){
-//              qotc = qotc + 1;
-//            }
-//            else if(t.type == 'ATC Design Course (DQOC)' ){
-//              dqoc = dqoc + 1;
-//            }
-//            else if(t.type == 'Improving Your Online Course (IYOC)'){
-//              iyoc = iyoc + 1
-//            }
-//          }
-//        }
-//      );
-//
-//    });
-//   //return
-// }).then(function(){
-//    console.log("End of Query" + qotc);
-//
-//   return   [{
-//       "label": "DQOC",
-//       "value": dqoc,
-//       "color": "#6dcb8e"
-//     },
-//     {
-//       "label": "QOTC",
-//       "value":qotc,
-//       "color": "#6dbb8c"
-//     },
-//     {
-//       "label": "IYOC",
-//       "value": iyoc,
-//       "color": "#d2ca49"
-//     },
-//     {
-//       "label": "QM FUN",
-//       "value": funCount,
-//       "color": "#088274"
-//     },
-//     {
-//       "label": "QM CERT",
-//       "value": externalCount,
-//       "color": "#448ec6"
-//     }
-//   ];
-// })
-//
-//    return d;
-// }.property(),
+data:computed(function(){
+  var college = this.get('college');
+  var department = this.get('department'); // Only one of both should be specified, that's how we will identify the query
+  var store = this.store;
+
+  var funCount = 0;
+  var internalCount = 0;
+  var externalCount = 0;
+  var training = {};
+
+  var dqoc = 0;
+  var qotc = 0;
+  var iyoc = 0;
+
+  var reviewQuery;// = undefined;
+  var trainingQuery;// = undefined;
+
+  var depts = store.findAll('department')
+
+  if(college){
+   reviewQuery = store.query('review',{'faculty.department.college':college});
+   trainingQuery = store.query('training',{'faculty.department.college':college});
+   var  name = college.getProperties('name').name;
+   console.log(" QUERY FOR COLLEGE : "+ name);
+  }
+  else if(department){
+   reviewQuery = store.query('review',{'faculty.department':department});
+   trainingQuery = store.query('training',{'faculty.department':department});
+  }
+
+
+
+  var getReviews = function(college) {
+    var promise =   new Ember.RSVP.Promise(function(resolve, reject){
+           reviewQuery.then(function(reviews){
+           reviews.forEach(function(review){
+
+               var r = review.getProperties('courseName','internalDate','externalDate','funDate')
+               if(r.internalDate){
+                   internalCount++;
+               }
+               if(r.externalDate){
+                   externalCount++;
+               }
+               if(r.funDate){
+                   funCount++;
+               }
+           })
+           resolve(reviews);
+         });
+      });
+      return promise;
+  }
+
+  var getTraining = function(college) {
+    var promise =   new Ember.RSVP.Promise(function(resolve, reject){
+
+      trainingQuery.then(function(trainings){
+
+        trainings.forEach(function(training){
+
+            var t = training.getProperties('type');
+            // console.log("Training " + t.type);
+            // console.log(training.faculty.department.college);
+            if(t.type){
+              var count = training[t.type] + 1 ;
+              training[t.type] = count;
+
+              if(t.type == 'ATC Teaching Course (TQOC)'){
+                qotc = qotc + 1;
+              }
+              else if(t.type == 'ATC Design Course (DQOC)' ){
+                dqoc = dqoc + 1;
+              }
+              else if(t.type == 'Improving Your Online Course (IYOC)'){
+                iyoc = iyoc + 1
+              }
+            }
+          }
+        );
+          resolve(trainings);
+
+      });
+    });
+            return promise;
+  }
+
+
+  // getReviews().then(function(reviews){
+  //   console.log("REW W");
+  //
+  // });
+
+  var promises = {
+    reviews:getReviews(college),
+    training:getTraining(college)
+  };
+
+
+  var endPromise =   new Ember.RSVP.Promise(function(resolve, reject){
+      Ember.RSVP.hash(promises).then(function(results) {
+          var array =  [{
+              "label": "DQOC",
+              "value": dqoc,
+              "color": "#6dcb8e"
+            },
+            {
+              "label": "QOTC",
+              "value":qotc,
+              "color": "#6dbb8c"
+            },
+            {
+              "label": "IYOC",
+              "value": iyoc,
+              "color": "#d2ca49"
+            },
+            {
+              "label": "QM FUN",
+              "value": funCount,
+              "color": "#088274"
+            },
+            {
+              "label": "QM CERT",
+              "value": externalCount,
+              "color": "#448ec6"
+            }
+          ];
+          resolve(array)
+
+      })
+  });
+
+  return endPromise;
+}),
+
+data1:computed(function(){
+  var college = this.get('college');
+  var department = this.get('department'); // Only one of both should be specified, that's how we will identify the query
+  var store = this.store;
+
+ var funCount = 0;
+ var internalCount = 0;
+ var externalCount = 0;
+ var training = {};
+
+ var dqoc = 0;
+ var qotc = 0;
+ var iyoc = 0;
+
+ var reviewQuery;// = undefined;
+ var trainingQuery;// = undefined;
+
+ var depts = store.findAll('department')
+
+ if(college){
+   reviewQuery = store.query('review',{'faculty.department.college':college});
+   trainingQuery = store.query('training',{'faculty.department.college':college});
+ }
+ else if(department){
+   reviewQuery = store.query('review',{'faculty.department':department});
+   trainingQuery = store.query('training',{'faculty.department':department});
+ }
+
+
+ var d =  reviewQuery.then(function(reviews){
+
+
+    reviews.forEach(function(review){
+
+        var r = review.getProperties('courseName','internalDate','externalDate','funDate')
+        // console.log("Review "+r.courseName);
+        if(r.internalDate){
+            internalCount++;
+        }
+        if(r.externalDate){
+            externalCount++;
+        }
+        if(r.funDate){
+            funCount++;
+        }
+
+
+    })
+
+
+    trainingQuery.then(function(trainings){
+
+      trainings.forEach(function(training){
+
+          var t = training.getProperties('type');
+          // console.log("Training " + t.type);
+          if(t.type){
+            var count = training[t.type] + 1 ;
+            training[t.type] = count;
+
+            if(t.type == 'ATC Teaching Course (TQOC)'){
+              qotc = qotc + 1;
+            }
+            else if(t.type == 'ATC Design Course (DQOC)' ){
+              dqoc = dqoc + 1;
+            }
+            else if(t.type == 'Improving Your Online Course (IYOC)'){
+              iyoc = iyoc + 1
+            }
+          }
+          // console.log(qotc);
+          // console.log(dqoc);
+          // console.log(iyoc);
+        }
+      );
+
+    }).then(function(){
+      console.log("end of trainings");
+      return   [{
+          "label": "DQOC",
+          "value": dqoc,
+          "color": "#6dcb8e"
+        },
+        {
+          "label": "QOTC",
+          "value":qotc,
+          "color": "#6dbb8c"
+        },
+        {
+          "label": "IYOC",
+          "value": iyoc,
+          "color": "#d2ca49"
+        },
+        {
+          "label": "QM FUN",
+          "value": funCount,
+          "color": "#088274"
+        },
+        {
+          "label": "QM CERT",
+          "value": externalCount,
+          "color": "#448ec6"
+        }
+      ];
+
+    });
+
+ })
+
+   return d;
+}),
 
  didRender() {
     this._super(...arguments);
-
  },
 
 
@@ -127,25 +269,29 @@ export default Ember.Component.extend({
   didInsertElement() {
     this._super(...arguments);
     // getData(this.store);
-    var store = this.store
-    var name = "";
-    var college = this.get('college');
-    var department = this.get('department');
-
-    if(college){
+    // var store = this.store
+    // var name = "";
+     var college = this.get('college');
+     var department = this.get('department');
+    //
+     if(college){
         name = college.getProperties('name').name;
     }
 
     if(department){
         name = department.getProperties('name').name;
     }
+    console.log("_____");
+    console.log(name);
+     var divName =  "chartdiv"+name;
+     var data = this.get('data');
 
 
-    var data = this.get('data');
-    data.then(function(d){
-      var divName =  "chartdiv"+name;
-      drawHorizontalLinearChart(divName,"Quality",d,false,4)
-    })
+     data.then(function(d){
+
+       console.log("Inside the then "+ divName);
+       drawHorizontalLinearChart(divName,"Quality",d,false,4)
+     })
   },
 });
 

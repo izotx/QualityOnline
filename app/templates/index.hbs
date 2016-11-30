@@ -85,12 +85,10 @@
 
   <div class="col-lg-12">
     <div class="row">
-      {{log model}}
-      {{#each model.data as |collegeData|}}
 
-        {{quality-chart data = collegeData.data }}
-
-        <!-- college=collegeData.college -->
+      {{#each model as |college|}}
+        {{quality-chart college=college}}
+        {{log college}}
       {{/each}}
 
 
