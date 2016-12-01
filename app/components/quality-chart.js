@@ -25,11 +25,15 @@ data:computed(function(){
   var reviewQuery;// = undefined;
   var trainingQuery;// = undefined;
 
+
+
   var depts = store.findAll('department')
 
   if(college){
-   reviewQuery = store.query('review',{'faculty.department.college':college});
-   trainingQuery = store.query('training',{'faculty.department.college':college});
+  var cid = college.getProperties("id").id
+  console.log(cid);
+   reviewQuery = store.query('review',{'faculty.department.college._id':college._id});
+   trainingQuery = store.query('training',{'faculty.department.college._id':college._id});
    var  name = college.getProperties('name').name;
    console.log(" QUERY FOR COLLEGE : "+ name);
   }
@@ -44,7 +48,7 @@ data:computed(function(){
     var promise =   new Ember.RSVP.Promise(function(resolve, reject){
            reviewQuery.then(function(reviews){
            reviews.forEach(function(review){
-
+             console.log(review.faculty);
                var r = review.getProperties('courseName','internalDate','externalDate','funDate')
                if(r.internalDate){
                    internalCount++;

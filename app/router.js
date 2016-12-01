@@ -19,6 +19,7 @@ Router.map(function() {
   this.route('faculty-list');
   this.route('departmentscontroller',{path:'/departmentscontroller/:college'});
   this.route('home');
+  this.route('admin');
 });
 
 export default Router;

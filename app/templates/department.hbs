@@ -20,25 +20,21 @@
 {{/each}}
 </tbody>
 </table>
-<!--
-<table class="table table-striped">
- <thead class="thead-inverse">
-    <th>Name</th><th>Last Name</th><th>Details</th>
-</thead>
-<tbody>
-{{#each model.faculty as |faculty| }}
-    <tr><td>{{faculty.firstname}}</td><td>{{faculty.lastname}}</td><td>{{#link-to 'faculty.faculty' faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
-{{/each}}
-</tbody>
-</table> -->
+
 <table class="table table-striped">
   <caption>ATC Teaching Course (TQOC)</caption>
  <thead class="thead-inverse">
     <th>Name</th><th>Last Name</th><th>Date</th> <th>Details</th>
 </thead>
 <tbody>
+  <!-- var design = this.store.query('training',{'faculty.department':department, filter:{type:'ATC Design Course (DQOC)'}});
+  var improving = this.store.query('training',{'faculty.department':department, filter:{type:'Improving Your Online Course (IYOC)'}}); -->
+
+
 {{#each model.teaching as |training| }}
-    <tr><td>{{training.faculty.firstname}}</td><td>{{training.faculty.lastname}}</td><td>{{training.date}}</td><td>{{#link-to 'faculty.faculty' training.faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
+
+      <tr><td>{{training.faculty.firstname}}</td><td>{{training.faculty.lastname}}</td><td>{{training.date}}</td><td>{{#link-to 'faculty.faculty' training.faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
+
 {{/each}}
 </tbody>
 </table>
@@ -50,6 +46,7 @@
 </thead>
 <tbody>
 {{#each model.improving as |training| }}
+{{log training.type}}
     <tr><td>{{training.faculty.firstname}}</td><td>{{training.faculty.lastname}}</td><td>{{training.date}}</td><td>{{#link-to 'faculty.faculty' training.faculty class='btn btn-primary btn-small'}}Show Details{{/link-to}}</td></tr>
 {{/each}}
 </tbody>
