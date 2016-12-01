@@ -32,8 +32,8 @@ data:computed(function(){
   if(college){
   var cid = college.getProperties("id").id
   console.log(cid);
-   reviewQuery = store.query('review',{'faculty.department.college._id':college._id});
-   trainingQuery = store.query('training',{'faculty.department.college._id':college._id});
+   reviewQuery = store.query('review',{orderBy:'faculty.department.college', equalTo:college});
+   trainingQuery = store.query('training',{orderBy:'faculty.department.college._id', equalTo:college._id});
    var  name = college.getProperties('name').name;
    console.log(" QUERY FOR COLLEGE : "+ name);
   }
