@@ -5,7 +5,7 @@ export default Ember.Route.extend({
   actions:{
     importData(){
      var store = this.store
-      $.getJSON('http://qualityonline.uwf.edu/data.php', function(departments) {
+      $.getJSON('http://djmobilesoftware.com/correct.json', function(departments) {
 
 
         var addedColleges = new Array()

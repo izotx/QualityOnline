@@ -8,7 +8,8 @@
     "jquery-ui": "~1.11.4",
     "bootstrap": "~3.3.5",
     "pure": "^0.6.0",
-    "font-awesome": "~4.5.0"
+    "font-awesome": "~4.5.0",
+    "firebase":"*"
   },
   "devDependencies": {
     "bootstrap": "^3.3.7"

@@ -32,10 +32,61 @@ data:computed(function(){
   if(college){
   var cid = college.getProperties("id").id
   console.log(cid);
-   reviewQuery = store.query('review',{orderBy:'faculty.department.college', equalTo:college});
-   trainingQuery = store.query('training',{orderBy:'faculty.department.college._id', equalTo:college._id});
+    var depts1 = college.get('departments').then(function(d){
+      d.forEach(function(x){
+        var n = x.getProperties('name')
+        console.log(n);
+      }
+    )
+  })
+  console.log(college.departments);
+
+  depts.forEach(function(x){
+    var n = x.getProperties('name')
+    console.log(n);
+
+    var fac1 = x.getProperties('faculty').faculty;
+    console.log(fac1);
+
+    var fac = x.get('faculty');
+    fac1.forEach(function(f){
+        console.log(f);
+        var reviews = f.get('review');
+        var training = f.get('training');
+        if(reviews){
+          reviews.forEach(function (review){
+            var r = review.getProperties('courseName','internalDate','externalDate','funDate');
+            if(r.internalDate){
+                internalCount++;
+            }
+            if(r.externalDate){
+                externalCount++;
+            }
+            if(r.funDate){
+                funCount++;
+            }
+            console.log(internalCount);
+            console.log(externalCount);
+            console.log(funCount);
+          })
+        }
+
+        training.forEach(function (r){
+          var name = r.getProperties('type').type;
+          console.log(name);
+        })
+    })
+  })
+  //  reviewQuery = store.query('review',{orderBy:'faculty.department.college', equalTo:college});
+  //  trainingQuery = store.query('training',{orderBy:'faculty.department.college._id', equalTo:college._id});
+
+   reviewQuery = store.query('review',{'faculty.department':department});
+   trainingQuery = store.query('training',{'faculty.department':department});
+
+
+
    var  name = college.getProperties('name').name;
-   console.log(" QUERY FOR COLLEGE : "+ name);
+  //  console.log(" QUERY FOR COLLEGE : "+ name);
   }
   else if(department){
    reviewQuery = store.query('review',{'faculty.department':department});
