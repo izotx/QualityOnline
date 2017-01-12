@@ -103,7 +103,7 @@ export default Ember.Service.extend({
                 var internalCount = reviewStats.internal
                 var externalCount = reviewStats.externalCount
 
-                return {"dqoc":dqoc, "qotc":qotc, "iyoc":iyoc, "funCount":funCount, "internalCount":internalCount, "externalCount":externalCount}
+                return {"dqoc":dqoc, "qotc":qotc, "iyoc":iyoc, "funCount":funCount, "internalCount":internalCount, "externalCount":externalCount,"training":data.training, "reviews":data.reviews}
           })
       })
 

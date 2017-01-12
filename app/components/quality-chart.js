@@ -24,14 +24,10 @@ data:computed(function(){
     })
   }
   else if(department){
-    // var did = department.getProperties("id").id
     facultyQuery = helper.getFacultyFromDepartment(department,store).then(function(fac){
           return helper.getDataFromFaculty(fac)
     })
   }
-
-//  return {"fun":funCount, "internal":internalCount, "externalCount":externalCount}
-
   var getData = function() {
     var promise =   new Ember.RSVP.Promise(function(resolve, reject){
            facultyQuery.then(function(data){

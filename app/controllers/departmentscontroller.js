@@ -70,9 +70,9 @@ export default Ember.Controller.extend({
                 name:name
             });
             department.set('college',college);
-            // college.get('departments').pushObject(department);
+            college.get('departments').pushObject(department);
             department.save();
-            // college.save()
+             college.save()
         }
         else{
           console.log("College Doesn't Exist");

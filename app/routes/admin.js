@@ -34,7 +34,6 @@ export default Ember.Route.extend({
                       name : collegeName
                     });
 
-                    console.log("Added");
                     record.save();
               }
               else{
@@ -45,11 +44,34 @@ export default Ember.Route.extend({
 
         })
 
-        departments.forEach(function(department){
-              var collegeName = department.college.post_title;
+        var uniqueDepartments = departments.map(function(d){return d.name}).filter(onlyUnique)
+        // console.log(uniqueDepartments);
 
-              ///{ filter:
+          departments.forEach(function(department){
+            console.log(department);
 
+              store.query('department', {orderBy: 'name', equalTo: department.name }).then(function(depts){
+                  if(depts.length >0 )
+                  {
+                    console.log(name + " Dept Exists");
+                    return
+                  }
+                  let record = store.createRecord('department',
+                  {
+                    name :department.name
+                  });
+                  var collegeName = department.college.post_title;
+                  console.log(collegeName);
+                  store.query('college', {orderBy: 'name', equalTo: collegeName }).then(function(college){
+                    console.log("College is: ");
+                    console.log(college.get('name']));
+
+                    record.set('college',college);
+                    college.get('departments').pushObject(record);
+                    record.save();
+                    college.save()
+                  })
+              })
           })
       });
     }

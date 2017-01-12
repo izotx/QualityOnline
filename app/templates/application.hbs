@@ -48,24 +48,18 @@
 
     </div>
     <!--/row-->
-    <hr>
+
+</div>
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
     <footer>
       {{#if session.isAuthenticated}}
-      <!-- {{#link-to "logout"}}Admin Login{{/link-to}} -->
-      <!-- <p>Admin zone</p>
-      {{#link-to "colleges"}}Colleges{{/link-to}}
-      {{#link-to 'departments'}}Departments{{/link-to}}
-      {{#link-to 'faculty-list'}}Faculty{{/link-to}} -->
-        <!-- <li>Admin Zone </li> -->
-        <!-- <li>  {{#link-to "colleges"}}Colleges{{/link-to}}</li>
-        <li>  {{#link-to 'departments'}}Departments{{/link-to}}</li>
-        <li>  {{#link-to 'faculty-list'}}Faculty{{/link-to}}</li>
-        <li><a href="#" onclick={{action "logout"}}> Logout </a> </li> -->
+
       {{#link-to "login"}}Logout Admin{{/link-to}}
       {{else}}
         {{#link-to "login"}}Admin Login{{/link-to}}
       {{/if}}
-        <p>© Academic Technology Center 2016</p>
+        <p>© Academic Technology Center 2017</p>
     </footer>
-
+  </div>
 </div>
