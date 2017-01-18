@@ -37,6 +37,7 @@
     "ember-cli-test-loader": "^1.1.0",
     "ember-cli-uglify": "^1.2.0",
     "ember-data": "^2.8.0",
+    "ember-emberfire-find-query": "git+https://github.com/TomHeatwole/ember-emberfire-find-query.git#462a96865fba2983091254ed09eaae51450a70a7",
     "ember-export-application-global": "^1.0.5",
     "ember-font-awesome": "2.2.0",
     "ember-light-table": "^1.4.4",

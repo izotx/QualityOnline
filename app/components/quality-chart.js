@@ -117,7 +117,7 @@ data:computed(function(){
      data.then(function(d){
 
       //  console.log("Inside the then "+ divName);
-       drawHorizontalLinearChart(divName,"Quality",d,false,4)
+       drawHorizontalLinearChart(divName,"Quality",d,false,25)
      })
   },
 });

@@ -190,16 +190,6 @@ export default Ember.Service.extend({
   },
 
   getFacultyFromDepartment(department,store){
-    // var depts = store.find('department',{orderBy:'_id', equalTo:id}})
-    // var _department = store.find('department',id)
-     console.log("DEPARTMENT");
-    //  console.log(_department);
-    // console.log(id);
-     console.log(department.getProperties(['name']));
-    //
-    // _department = store.query('department',{orderBy:'id', equalTo:id})
-    // console.log(_department);
-
     return  new Promise((resolve,reject)=>{
       department.get('faculty').then(function(faculty){
           var facultyArray = []

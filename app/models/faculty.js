@@ -8,5 +8,6 @@ export default DS.Model.extend({
   email: DS.attr('string'),
   department: DS.belongsTo('department'),
   reviews: DS.hasMany('review'),
-  training: DS.hasMany('training')
+  training: DS.hasMany('training'),
+  wid:DS.attr('string')
 });
