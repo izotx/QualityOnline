@@ -10,7 +10,11 @@ import Table from 'ember-light-table';
       return this.store.findAll('department');
     }),
 
-
+    faculty:computed(function(){
+      console.log("Inside the model of fac list");
+      return this.model.sortBy('lastname')
+      // return this.store.findAll('faculty').sortBy('lastname');
+    }),
 
     editMode:false,
     actions: {
@@ -56,38 +60,7 @@ import Table from 'ember-light-table';
           department.get('faculty').pushObject(faculty);
           department.save();
           faculty.save();
-        // });
-
-      // },
-      // selectAll() {
-      //   this.get('table').rows.setEach('selected', true);
-      // },
-      //
-      // deselectAll() {
-      //   this.get('table.selectedRows').setEach('selected', false);
-      // },
-      //
-      // deleteAll() {
-      //   this.get('table').removeRows(this.get('table.selectedRows'));
-      // },
-      //
-      // onScrolledToBottom() {
-      //   if(this.get('canLoadMore')) {
-      //     this.incrementProperty('page');
-      //     this.fetchRecords();
-      //   }
-      // },
-      //
-      // onColumnClick(column) {
-      //   if (column.sorted) {
-      //     this.setProperties({
-      //       dir: column.ascending ? 'asc' : 'desc',
-      //       sort: column.get('valuePath'),
-      //       page: 1
-      //     });
-      //     this.get('model').clear();
-      //     this.fetchRecords();
-      //   }
+         Ember.$("#message").val('Faculty Added.');
       }
     }
   });

@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   session: Ember.inject.service('session'),
   firebase: Ember.inject.service(),
-  message:"3223",
+  message:"",
   actions:{
       logout(){
         let session = this.get('session')

@@ -18,6 +18,7 @@
   <button type="button" class="btn btn-xs btn-info"  {{action "addFaculty" salutation firstname lastname email}}>Add Faculty</button>
   <hr>
   <br>
+  <p id="message"></p>
 {{else}}
   <button {{action 'editMode'}}>Edit</button>
  {{/if}}
@@ -37,7 +38,7 @@
 <th>Details</th>
 </thead>
 <tbody>
-{{#each model as |faculty| }}
+{{#each faculty as |faculty| }}
   <tr><td></td>
       <td>{{faculty.salutation}}</td>
       <td>{{faculty.firstname}}</td>
