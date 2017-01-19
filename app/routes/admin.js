@@ -4,17 +4,41 @@ import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 export default Ember.Route.extend(FindQuery,{
   helper: Ember.inject.service('quality-data'),
   actions:{
-    addOne(){
-      console.log("Add");
+    sanitizeTraining(){
+
+      this.store.query('training',{}).then(function(training){
+          var tr = training.toArray()
+          //  courseTypes:[{name:'ATC Teaching Course (TQOC)'}, {name:'ATC Design Course (DQOC)'},{name:'Improving Your Online Course (IYOC)'}]
+          tr.forEach(function(t){
+              //get training type
+              let type = t.get('type')
+              if(type === 'Designing a Quality Online Course'){
+                t.set('type','ATC Design Course (DQOC)')
+              }
+              if(type === 'Teaching a Quality Online Course'){
+                t.set('type','ATC Teaching Course (TQOC)')
+              }
+              if(type === 'Improving Your Online Course (IYOC)'){
+                t.set('type','mproving Your Online Course (IYOC)')
+              }
+              t.save()
+          })
+      })
+
+
+    },
+
+    clearTraining(){
+      console.log("It's really deleting the revies and training now");
       var store = this.store
       store.query('faculty',{}).then(function(facs){
           var ff = facs.toArray()
           // console.log(facs.toArray());
           ff.forEach(function(f){
               f.set('training',[])
+              f.set('reviews',[])
               f.save()
           })
-
       })
 
       // let record = store.createRecord('department',
@@ -184,7 +208,7 @@ function importQData(store, departments){
       }).then(function (deptModel){
         var reviews = department.reviews
         if(reviews){
-            // importReviews(store,reviews)
+            importReviews(store,reviews)
         }
         var training = department.training
         if(training){
@@ -206,10 +230,19 @@ function importReviews(store, reviews){
     findOneModel(store, 'faculty','wid', String(id)).then(function(facultyMember){
 
       if (facultyMember){
-        // console.log("Found");
-        facultyMember.set('firstname', r.instructorName)
-        facultyMember.set('lastname', r.instructorLastName)
-        facultyMember.set('email', r.instructorEmail)
+        console.log("Found Review");
+        console.log(r.instructorName);
+
+        if(r.instructorName){
+          facultyMember.set('firstname', r.instructorName)
+          console.log("Setting First Name to : " + r.instructorName);
+        }
+        if(r.instructorLastName){
+          facultyMember.set('lastname', r.instructorLastName)
+        }
+        if(r.instructorEmail){
+          facultyMember.set('email', r.instructorEmail)
+        }
 
         var iDate = toDate(r.internalDate);
         var eDate = toDate(r.externalDate);
@@ -227,10 +260,10 @@ function importReviews(store, reviews){
       facultyMember.get('reviews').pushObject(record);
       facultyMember.save();
       record.save();
-
+      console.log("Saving Faculty Reviews End___");
       }
       else{
-                        console.log("Not Found" + id );
+            console.log("Not Found" + id );
       }
     })
   })
@@ -239,15 +272,23 @@ function importReviews(store, reviews){
 
 function importTraining(store,training){
   training.forEach(function(r){
-    console.log(r);
-    //find an instructor
+
     let id = r.instructor.ID
     findOneModel(store, 'faculty','wid', String(id)).then(function(facultyMember){
       if (facultyMember){
-        // console.log("Found");
-        facultyMember.set('firstname', r.instructor.instructorName)
-        facultyMember.set('lastname', r.instructor.instructorLastName)
-        facultyMember.set('email', r.instructor.instructorEmail)
+         console.log("Found Training");
+        if(r.instructorName){
+          facultyMember.set('firstname', r.instructorName)
+          console.log("Setting First Name to : " + r.instructorName);
+        }
+        if(r.instructorLastName){
+          facultyMember.set('lastname', r.instructorLastName)
+        }
+        if(r.instructorEmail){
+          facultyMember.set('email', r.instructorEmail)
+        }
+
+
         var completed = toDate(r.completed)
 
         let record =store.createRecord('training',
@@ -257,10 +298,11 @@ function importTraining(store,training){
           date:completed
       });
 
-      facultyMember.get('training').pushObject(record);
-      facultyMember.save();
+      facultyMember.get('training').pushObject(record)
+      facultyMember.save().then(function(){
+          console.log("Training SAVED ");
+      });;
       record.save();
-
       }
       else{
           console.log("Not Found" + id );

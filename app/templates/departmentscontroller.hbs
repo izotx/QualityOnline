@@ -77,9 +77,14 @@
   <div class="row">
 
     {{#each model.college.departments as |department|}}
-      {{quality-chart department = department}}
+      {{quality-chart department = department maximum = 10}}
     {{/each}}
 
 
+  </div>
+</div>
+<!--Empty Space Under the charts  -->
+<div class="col-lg-12">
+  <div class="row" style="height:100px">
   </div>
 </div>

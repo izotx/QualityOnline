@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   constants : Ember.inject.service('constants'),
   helper: Ember.inject.service('quality-data'),
   college : null,
-
+  maximum:60,
 
 data:computed(function(){
   var college = this.get('college');
@@ -46,6 +46,7 @@ data:computed(function(){
 
 
   var endPromise =   new Ember.RSVP.Promise(function(resolve, reject){
+
       getData().then(function(results) {
           var array =  [{
               "label": "DQOC",
@@ -98,6 +99,7 @@ data:computed(function(){
     // getData(this.store);
     // var store = this.store
     // var name = "";
+    var maximum = this.get('maximum')
      var college = this.get('college');
      var department = this.get('department');
     //
@@ -117,7 +119,7 @@ data:computed(function(){
      data.then(function(d){
 
       //  console.log("Inside the then "+ divName);
-       drawHorizontalLinearChart(divName,"Quality",d,false,25)
+       drawHorizontalLinearChart(divName,"Quality",d,false,maximum)
      })
   },
 });

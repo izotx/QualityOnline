@@ -87,10 +87,46 @@
     <div class="row">
 
       {{#each model as |college|}}
-        {{quality-chart college=college}}
-        {{log college}}
+        {{#if (eq college.name  "CASSH")}}
+          {{quality-chart college=college maximum = 60}}
+        {{/if}}
+        {{#if (eq college.name  "CEPS")}}
+          {{quality-chart college=college maximum = 60}}
+        {{/if}}
+        {{#if (eq college.name  "COB")}}
+          {{quality-chart college=college maximum = 60}}
+        {{/if}}
+        {{#if (eq college.name  "COH")}}
+          {{quality-chart college=college maximum = 60}}
+        {{/if}}
+        {{#if (eq college.name  "HMCSE")}}
+          {{quality-chart college=college maximum = 60}}
+        {{/if}}
+      {{/each}}
+    </div>
+  </div>
+
+
+  <div class="col-lg-12">
+        <div class="row">
+      {{#each model as |college|}}
+        {{#if (eq college.name  "CDE")}}
+          {{quality-chart college=college maximum=10}}
+        {{/if}}
+        {{#if (eq college.name  "JCP Library")}}
+          {{quality-chart college=college maximum=10}}
+        {{/if}}
+        {{#if (eq college.name  "UC")}}
+          {{quality-chart college=college maximum=10}}
+        {{/if}}
       {{/each}}
 
 
+    </div>
+  </div>
+
+  <!-- Empty space under -->
+  <div class="col-lg-12">
+    <div class="row" style="height:100px">
     </div>
   </div>

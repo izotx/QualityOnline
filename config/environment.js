@@ -6,12 +6,14 @@ module.exports = function(environment) {
     environment: environment,
     contentSecurityPolicy: { 'connect-src': "'self' https://auth.firebase.com wss://*.firebaseio.com" },
     rootURL: '/',
+
+
     firebase:  {
-        apiKey: "AIzaSyB8TQjczxRYH3kqVTWenqYT1onUhMIpfl4",
-        authDomain: "qualityonline-fb396.firebaseapp.com",
-        databaseURL: "https://qualityonline-fb396.firebaseio.com",
-        storageBucket: "qualityonline-fb396.appspot.com",
-        messagingSenderId: "631911141512"
+      apiKey: "AIzaSyB8TQjczxRYH3kqVTWenqYT1onUhMIpfl4",
+      authDomain: "qualityonline-fb396.firebaseapp.com",
+      databaseURL: "https://qualityonline-fb396.firebaseio.com",
+      storageBucket: "qualityonline-fb396.appspot.com",
+      messagingSenderId: "631911141512"
       },
        torii: {
           sessionServiceName: 'session'
